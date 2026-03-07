@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# EstateContacts Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -274,72 +274,92 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* condominium estate managers or operations managers
+* manage multiple contractors and vendors
+* need to track maintenance contacts and service providers
+* can type fast and prefer keyboard interaction
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: 
+helps estate managers organise contractor contract details in a searchable desktop
+system, allowing them to retrieve and update contact information fast.
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​ | I want to …​                     | So that I can…​                                     |
+|----------|---------|----------------------------------|-----------------------------------------------------|
+| `* * *`  | user    | view a list of contractors       | browse available vendors                            |
+| `* * *`  | user    | add contractor contact details   | store essential contacts in one place               |
+| `* * *`  | user    | search contractors by name       | find a contractor quickly                           |
+| `* * *`  | user    | add a maintanence task           | track scheduled work                                |
+| `* * *`  | user    | delete contractor records        | remove outdated or incorrect contacts               |
+| `* * *`  | user    | delete a maintanence task        | remove tasks that are no longer required            |
+| `* * *`  | user    | view a list of maintanence tasks | view all ongoing maintanenec issues in the estate   |
+| `* *`    | user    | add remarks to contacts          | record notes about contractors or service providers |
+| `* *`    | user    | tag contractors by service type  | organise contacts                                   |
 
 *{More to be added}*
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `EstateContacts` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Add a contractor contact**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add a new contact.
+2. EstateContacts prompts for the contact details.
+3. User provides the contractor's name, phone number, email, and address.
+4. EstateContacts adds the contact to the system.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 3a. The provided contact details are invalid.
+
+    * 3a1. EstateContacts shows an error message.
+
+    Use case resumes at step 2.
+
+
+-**Use case: List maintenance tasks**
+
+**MSS**
+
+1. User requests to view maintenance tasks.
+2. EstateContacts retrieves all stored maintenance tasks.
+3. EstateContacts displays the list of maintenance tasks.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. There are no maintenance tasks found.
+
+    * 3a1. EstateContacts informs the user that no tasks exist.
 
   Use case ends.
 
-* 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
 
 *{More to be added}*
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1. The system should work on any mainstream OS with Java 17 installed.
+2. The system should be able to store at least 1000 contacts without noticeable performance degradation.
+3. The system should respond to user commands within 1 second under normal usage conditions.
 
 *{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-
+* **Contractor Contact**: A service provider such as an electrician, plumber, or a cleaning company.
+* **Estate Manager**: A person responsible for managing the daily operations of a condominium estate.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
