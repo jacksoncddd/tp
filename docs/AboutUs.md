@@ -13,7 +13,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Tan Yeong Teng Justin
 
-<img src="images/cyrpux.png" width="200px">
+<img src="images/cyprux.png" width="200px">
 
 [[github](http://github.com/cyprux)]
 [[portfolio](team/johndoe.md)]
