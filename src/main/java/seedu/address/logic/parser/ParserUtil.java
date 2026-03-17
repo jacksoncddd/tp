@@ -122,7 +122,7 @@ public class ParserUtil {
     public static Service parseService(String service) throws  ParseException {
         requireNonNull(service);
         String trimmedService = service.trim();
-        if (!Email.isValidEmail(trimmedService)) {
+        if (!Service.isValidService(trimmedService)) {
             throw new ParseException(Service.MESSAGE_CONSTRAINTS);
         }
         return new Service(trimmedService);
