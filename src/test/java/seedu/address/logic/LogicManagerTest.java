@@ -29,7 +29,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.task.MaintenanceTaskList;
 import seedu.address.storage.JsonAddressBookStorage;
+import seedu.address.storage.JsonTaskListStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
 import seedu.address.testutil.PersonBuilder;
@@ -48,8 +50,12 @@ public class LogicManagerTest {
     public void setUp() {
         JsonAddressBookStorage addressBookStorage =
                 new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
-        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        JsonUserPrefsStorage userPrefsStorage = 
+                new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
+        JsonTaskListStorage taskListStorage =
+                new JsonTaskListStorage(temporaryFolder.resolve("tasklist.json"));
+
+        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage, taskListStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -161,7 +167,17 @@ public class LogicManagerTest {
 
         JsonUserPrefsStorage userPrefsStorage =
                 new JsonUserPrefsStorage(temporaryFolder.resolve("ExceptionUserPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        
+        JsonTaskListStorage taskListStorage =
+            new JsonTaskListStorage(temporaryFolder.resolve("ExceptionTaskList.json")) {
+                @Override
+                public void saveTaskList(MaintenanceTaskList taskList, Path filePath)
+                        throws IOException {
+                    throw e;
+                }
+            };
+
+        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage, taskListStorage);
 
         logic = new LogicManager(model, storage);
 
