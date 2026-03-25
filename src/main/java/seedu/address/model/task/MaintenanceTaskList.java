@@ -60,8 +60,10 @@ public class MaintenanceTaskList {
     public ObservableList<MaintenanceTask> asUnmodifiableObservableList() {
         return FXCollections.unmodifiableObservableList(FXCollections.observableList(tasks));
     }
-  
-     * Sorts tasks in-place by date (ascending). Ties are broken deterministically to ensure a stable order.
+
+    /**
+     * Sorts tasks in-place by date (ascending). Ties are broken deterministically
+     * to ensure a stable order.
      */
     public void sortTasksByDate() {
         tasks.sort(Comparator
