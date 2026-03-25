@@ -24,6 +24,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final MaintenanceTaskList taskList = new MaintenanceTaskList();
+    private final FilteredList<MaintenanceTask> filteredMaintenanceTasks;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -36,13 +37,16 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.filteredMaintenanceTasks = new FilteredList<>(
+                this.addressBook.getMaintenanceTaskList().asUnmodifiableObservableList());
     }
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
 
-    //=========== UserPrefs ==================================================================================
+    // =========== UserPrefs
+    // ==================================================================================
 
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
@@ -77,7 +81,8 @@ public class ModelManager implements Model {
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
-    //=========== AddressBook ================================================================================
+    // =========== AddressBook
+    // ================================================================================
 
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
@@ -118,10 +123,12 @@ public class ModelManager implements Model {
         return taskList;
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    // =========== Filtered Person List Accessors
+    // =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Person} backed by the
+     * internal list of
      * {@code versionedAddressBook}
      */
     @Override
@@ -130,9 +137,20 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<MaintenanceTask> getFilteredMaintenanceTaskList() {
+        return filteredMaintenanceTasks;
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredMaintenanceTaskList(Predicate<MaintenanceTask> predicate) {
+        requireNonNull(predicate);
+        filteredMaintenanceTasks.setPredicate(predicate);
     }
 
     @Override
