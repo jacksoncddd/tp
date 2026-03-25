@@ -133,6 +133,18 @@ Examples:
 * `listc` followed by `delc 2` deletes the 2nd contractor in the address book.
 * `findc Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
 
+### Editing a contractor : `editc`
+
+Edits the details of the contractor identified by the index number shown in the displayed contractor list.
+
+Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]...`
+
+* Existing values will be overwritten by the input values.
+* At least one field must be provided.
+
+Example:
+* `editc 1 p/91234567 e/johndoe@example.com`
+
 ### Maintenance task features
 
 ---
@@ -152,6 +164,12 @@ Examples:
 Shows a list of all tasks in the address book.
 
 Format: `listt`
+
+### Sorting tasks by date : `sortt`
+
+Sorts the maintenance task list by date (ascending).
+
+Format: `sortt`
 
 ### Deleting a task : `deletet`
 
@@ -233,6 +251,8 @@ Action     | Format, Examples
 **Add**    | `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…​` <br> e.g., `addc n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/Plumbing t/friend t/colleague`
 **Clear**  | `clear`
 **Delete** | `delc INDEX`<br> e.g., `delete 3`
+**Edit**   | `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]…​`
 **Find**   | `findc KEYWORD [MORE_KEYWORDS]`<br> e.g., `findc James Jake`
 **List**   | `listc`
+**Sort**   | `sortt`
 **Help**   | `help`

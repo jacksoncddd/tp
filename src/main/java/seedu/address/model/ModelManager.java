@@ -118,6 +118,11 @@ public class ModelManager implements Model {
         return taskList;
     }
 
+    @Override
+    public void sortTasksByDate() {
+        taskList.sortTasksByDate();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
