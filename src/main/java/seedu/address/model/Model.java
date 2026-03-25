@@ -86,5 +86,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Sorts the maintainence tasks by date.
+     */
+    void sortTasksByDate();
+
     MaintenanceTaskList getMaintenanceTaskList();
 }

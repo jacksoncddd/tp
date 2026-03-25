@@ -2,6 +2,7 @@ package seedu.address.model.task;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -47,5 +48,15 @@ public class MaintenanceTaskList {
         return tasks.stream()
                 .anyMatch(t -> t.getFacility().equalsIgnoreCase(facility)
                         && t.getDate().equals(date));
+    }
+
+    /**
+     * Sorts tasks in-place by date (ascending). Ties are broken deterministically to ensure a stable order.
+     */
+    public void sortTasksByDate() {
+        tasks.sort(Comparator
+                .comparing(MaintenanceTask::getDate)
+                .thenComparing(MaintenanceTask::getFacility, String.CASE_INSENSITIVE_ORDER)
+                .thenComparingInt(MaintenanceTask::getContractorIndex));
     }
 }

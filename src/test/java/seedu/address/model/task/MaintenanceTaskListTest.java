@@ -80,4 +80,30 @@ public class MaintenanceTaskListTest {
         taskList.addTask(anotherTask);
         assertEquals(2, taskList.size());
     }
+
+    @Test
+    public void sortTasksByDate_tasksSortedByAscendingDate() {
+        MaintenanceTask laterTask = new MaintenanceTask(
+                "Swimming Pool",
+                LocalDate.of(2026, 12, 15),
+                2,
+                Set.of(new Tag("plumber")),
+                new Service("Plumber"));
+        MaintenanceTask earlierTask = new MaintenanceTask(
+                "Sports Hall",
+                LocalDate.of(2026, 12, 1),
+                1,
+                Set.of(new Tag("electrician")),
+                new Service("Electrician"));
+
+        // Add in reverse order to verify sorting actually changes the order.
+        taskList.addTask(laterTask);
+        taskList.addTask(earlierTask);
+
+        taskList.sortTasksByDate();
+
+        assertEquals(2, taskList.size());
+        assertEquals("Sports Hall", taskList.getTasks().get(0).getFacility());
+        assertEquals("Swimming Pool", taskList.getTasks().get(1).getFacility());
+    }
 }
