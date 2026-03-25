@@ -1,7 +1,6 @@
 package seedu.address.model.task;
 
 import java.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,6 @@ public class MaintenanceTaskList {
 
     /**
      * Removes the task at the specified index from the list.
-     * 
      * @param index The 0-based index of the task to remove.
      */
     public void removeTask(int index) {
