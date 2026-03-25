@@ -136,6 +136,17 @@ The `Model` component,
 
 </box>
 
+#### Maintenance Task Model
+
+The following class diagram shows how the `MaintenanceTask` feature is integrated into the Model component:
+
+<puml src="diagrams/MaintenanceTaskClassDiagram.puml" width="450" />
+
+The `MaintenanceTaskList` component,
+* stores all `MaintenanceTask` objects added by the user.
+* each `MaintenanceTask` holds a reference to the contractor's `Tag` set and `Service`, inherited at the time of task creation.
+* is held by `ModelManager` and accessed via the `Model` interface.
+
 
 ### Storage component
 
@@ -255,6 +266,41 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### Maintenance Task Feature
+
+The maintenance task feature allows estate managers to add, list, and delete maintenance tasks via the `addt`, `listt`, and `delt` commands.
+
+#### Implementation
+
+The following sequence diagram shows how the `addt` command is executed:
+
+<puml src="diagrams/AddtSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the addt Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `AddtCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+
+</box>
+
+The `addt` command works as follows:
+1. The user enters `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`.
+2. `AddressBookParser` creates an `AddtCommandParser` which parses the arguments.
+3. `AddtCommand` is created and executed by `LogicManager`.
+4. `AddtCommand` validates the contractor index against the filtered person list.
+5. The contractor's `Tag` set and `Service` are retrieved from the matched `Person`.
+6. A new `MaintenanceTask` is created and added to the `MaintenanceTaskList` in the `Model`.
+
+#### Design considerations:
+
+**Aspect: Where to store contractor information in the task:**
+
+* **Alternative 1 (current choice):** Store contractor's `Tag` and `Service` in the task at creation time.
+    * Pros: Task display is self-contained, no need to look up contractor for every display.
+    * Cons: If contractor details change, the task's stored tags/service become outdated.
+
+* **Alternative 2:** Store only the contractor index and look up details at display time.
+    * Pros: Always shows the latest contractor details.
+    * Cons: Requires model access at display time; contractor deletion could cause errors.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -279,7 +325,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * need to track maintenance contacts and service providers
 * can type fast and prefer keyboard interaction
 
-**Value proposition**: 
+**Value proposition**:
 helps estate managers organise contractor contract details in a searchable desktop
 system, allowing them to retrieve and update contact information fast.
 

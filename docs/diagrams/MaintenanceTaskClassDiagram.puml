@@ -1,0 +1,29 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+Package Model as ModelPackage <<Rectangle>>{
+Class "<<interface>>\nModel" as Model
+Class ModelManager
+Class MaintenanceTaskList
+Class MaintenanceTask
+Class Person
+Class Tag
+Class Service
+
+Class I #FFFFFF
+}
+
+ModelManager .up.|> Model
+ModelManager *--> "1" MaintenanceTaskList
+MaintenanceTaskList --> "0..* tasks" MaintenanceTask
+MaintenanceTask *--> "*" Tag
+MaintenanceTask *--> "1" Service
+Person *--> "*" Tag
+Person *--> "1" Service
+
+MaintenanceTask -[hidden]up--> I
+MaintenanceTaskList -[hidden]right-> I
+@enduml

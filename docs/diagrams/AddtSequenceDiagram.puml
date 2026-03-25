@@ -1,0 +1,78 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":AddtCommandParser" as AddtCommandParser LOGIC_COLOR
+participant "a:AddtCommand" as AddtCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant ":MaintenanceTaskList" as TaskList MODEL_COLOR
+end box
+
+[-> LogicManager : execute("addt f/Sports Hall d/2026-12-01 c/1")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("addt f/Sports Hall d/2026-12-01 c/1")
+activate AddressBookParser
+
+create AddtCommandParser
+AddressBookParser -> AddtCommandParser
+activate AddtCommandParser
+
+AddtCommandParser --> AddressBookParser
+deactivate AddtCommandParser
+
+AddressBookParser -> AddtCommandParser : parse("f/Sports Hall d/2026-12-01 c/1")
+activate AddtCommandParser
+
+create AddtCommand
+AddtCommandParser -> AddtCommand
+activate AddtCommand
+
+AddtCommand --> AddtCommandParser
+deactivate AddtCommand
+
+AddtCommandParser --> AddressBookParser : a
+deactivate AddtCommandParser
+AddtCommandParser -[hidden]-> AddressBookParser
+destroy AddtCommandParser
+
+AddressBookParser --> LogicManager : a
+deactivate AddressBookParser
+
+LogicManager -> AddtCommand : execute(m)
+activate AddtCommand
+
+AddtCommand -> Model : getFilteredPersonList()
+activate Model
+Model --> AddtCommand : List<Person>
+deactivate Model
+
+AddtCommand -> Model : getMaintenanceTaskList()
+activate Model
+Model --> AddtCommand : MaintenanceTaskList
+deactivate Model
+
+AddtCommand -> TaskList : addTask(task)
+activate TaskList
+TaskList --> AddtCommand
+deactivate TaskList
+
+create CommandResult
+AddtCommand -> CommandResult
+activate CommandResult
+CommandResult --> AddtCommand
+deactivate CommandResult
+
+AddtCommand --> LogicManager : r
+deactivate AddtCommand
+
+[<-- LogicManager
+deactivate LogicManager
+@enduml
