@@ -97,7 +97,6 @@ public class HistoryCommandTest {
     @Test
     public void execute_facilityNameCaseInsensitive_tasksFound() {
         String facilityName = "sports hall";
-        String actualFacilityName = "Sports Hall";
 
         HistoryCommand command = new HistoryCommand(facilityName);
         FacilityContainsKeywords predicate = new FacilityContainsKeywords(facilityName);
