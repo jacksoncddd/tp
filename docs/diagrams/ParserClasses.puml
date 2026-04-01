@@ -10,7 +10,10 @@ Class XYZCommand
 package "Parser classes"{
 Class "<<interface>>\nParser" as Parser
 Class AddressBookParser
-Class XYZCommandParser
+Class AddtCommandParser
+Class DeltCommandParser
+Class DonetCommandParser
+Class ReportCommandParser
 Class CliSyntax
 Class ParserUtil
 Class ArgumentMultimap
@@ -21,17 +24,47 @@ Class Prefix
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> AddressBookParser
 
-AddressBookParser .down.> XYZCommandParser: <<create>>
+AddressBookParser .down.> AddtCommandParser: <<create>>
+AddressBookParser .down.> DeltCommandParser: <<create>>
+AddressBookParser .down.> DonetCommandParser: <<create>>
+AddressBookParser .down.> ReportCommandParser: <<create>>
 
-XYZCommandParser ..> XYZCommand : <<create>>
+AddtCommandParser ..> XYZCommand : <<create>>
+DeltCommandParser ..> XYZCommand : <<create>>
+DonetCommandParser ..> XYZCommand : <<create>>
+ReportCommandParser ..> XYZCommand : <<create>>
+
 AddressBookParser ..> Command : <<use>>
-XYZCommandParser .up.|> Parser
-XYZCommandParser ..> ArgumentMultimap
-XYZCommandParser ..> ArgumentTokenizer
+
+AddtCommandParser .up.|> Parser
+DeltCommandParser .up.|> Parser
+DonetCommandParser .up.|> Parser
+ReportCommandParser .up.|> Parser
+
+AddtCommandParser ..> ArgumentMultimap
+DeltCommandParser ..> ArgumentMultimap
+DonetCommandParser ..> ArgumentMultimap
+ReportCommandParser ..> ArgumentMultimap
+
+AddtCommandParser ..> ArgumentTokenizer
+DeltCommandParser ..> ArgumentTokenizer
+DonetCommandParser ..> ArgumentTokenizer
+ReportCommandParser ..> ArgumentTokenizer
+
 ArgumentTokenizer .left.> ArgumentMultimap
-XYZCommandParser ..> CliSyntax
+
+AddtCommandParser ..> CliSyntax
+DeltCommandParser ..> CliSyntax
+DonetCommandParser ..> CliSyntax
+ReportCommandParser ..> CliSyntax
+
 CliSyntax ..> Prefix
-XYZCommandParser ..> ParserUtil
+
+AddtCommandParser ..> ParserUtil
+DeltCommandParser ..> ParserUtil
+DonetCommandParser ..> ParserUtil
+ReportCommandParser ..> ParserUtil
+
 ParserUtil .down.> Prefix
 ArgumentTokenizer .down.> Prefix
 XYZCommand -up-|> Command
