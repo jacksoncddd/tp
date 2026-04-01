@@ -70,7 +70,7 @@ public class AddtCommand extends Command {
 
         List<Person> allPersons = model.getAddressBook().getPersonList();
         Person contractor = model.getFilteredPersonList().get(contractorIndex.getZeroBased());
-        
+
         int fullListIndex = allPersons.indexOf(contractor) + 1;
         if (fullListIndex == 0) {
             throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
