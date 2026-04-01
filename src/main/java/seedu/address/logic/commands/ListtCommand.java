@@ -20,27 +20,17 @@ public class ListtCommand extends Command {
     public CommandResult execute(Model model) {
         assert model != null : "Model should not be null";
         MaintenanceTaskList taskList = model.getMaintenanceTaskList();
-
         List<MaintenanceTask> tasks = taskList.getTasks();
         List<Person> personList = model.getFilteredPersonList();
 
-        long pendingCount = tasks.stream()
-                .filter(task -> !task.isCompleted())
-                .count();
-
-        if (pendingCount == 0) {
+        if (tasks.isEmpty()) {
             return new CommandResult(MESSAGE_NO_TASKS);
         }
 
         StringBuilder sb = new StringBuilder(MESSAGE_SUCCESS + "\n");
-        int displayIndex = 1;
 
         for (int i = 0; i < tasks.size(); i++) {
             MaintenanceTask task = tasks.get(i);
-            if (task.isCompleted()) {
-                continue;
-            }
-
             int contractorIdx = task.getContractorIndex() - 1;
             String contractorName;
             String tagsString;
@@ -59,14 +49,13 @@ public class ListtCommand extends Command {
                 tagsString = "";
             }
 
-            sb.append(displayIndex).append(". ")
-                    .append("[PENDING] ")
+            sb.append(i + 1).append(". ")
+                    .append(task.isCompleted() ? "[DONE] " : "[PENDING] ")
                     .append(task.getFacility())
                     .append(" on ").append(task.getDate())
                     .append(" (Contractor: ").append(contractorName)
                     .append(" | Service: ").append(service)
                     .append(" | Tags: [").append(tagsString).append("])\n");
-            displayIndex++;
         }
         return new CommandResult(sb.toString());
     }
