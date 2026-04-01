@@ -214,6 +214,19 @@ Format: `donet INDEX`
 Examples:
 * `listt` followed by `donet 1` marks the 1st task in the task list as completed.
 
+### Viewing maintenance history for a facility : `history`
+
+Shows a list of all maintenance tasks associated with a specific facility.
+
+Format: `history f/FACILITY_NAME`
+
+* Lists all tasks for the specified facility.
+* If no tasks are found, a message will indicate that no maintenance history exists for that facility.
+
+Examples:
+* `history f/Sports Hall` displays the maintenance history for the "Sports Hall".
+* `history f/Function Room` displays the maintenance history for the "Function Room".
+
 ### Generating a monthly report : `report`
 
 Generates a summary report of all completed maintenance tasks for the specified month.
@@ -301,6 +314,7 @@ Action     | Format, Examples
 **Find**   | `findc KEYWORD [s/SERVICE] [MORE_KEYWORDS]`<br> e.g., `findc James Jake`
 **List**   | `listc`
 **Sort**   | `sortt`
+**History**| `history f/FACILITY_NAME`<br> e.g., `history f/Sports Hall`
 **Help**   | `help`
 **Done**   | `donet INDEX`<br> e.g., `donet 1`
 **Report** | `report m/YEAR-MONTH`<br> e.g., `report m/2026-12`
