@@ -64,8 +64,12 @@ public class DonetCommand extends Command {
         logger.info("Task marked as completed: " + taskToComplete.getFacility());
 
         // Build display string
-        Person contractor = model.getFilteredPersonList()
-                .get(taskToComplete.getContractorIndex() - 1);
+        List<Person> allPersons = model.getAddressBook().getPersonList();
+        int contractorIdx = taskToComplete.getContractorIndex() - 1;
+        if (contractorIdx < 0 || contractorIdx >= allPersons.size()) {
+            throw new CommandException("Contractor linked to this task no longer exists.");
+        }
+        Person contractor = allPersons.get(contractorIdx);
         String tagsString = taskToComplete.getTags().stream()
                 .map(tag -> tag.tagName)
                 .collect(Collectors.joining(", "));

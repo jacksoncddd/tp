@@ -103,9 +103,9 @@ Format: `listc`
 
 ### Locating contractors by name or service : `findc`
 
-Finds contractors whose names or service contain any of the given keywords.
+Finds contractors whose names (n/) or service (s/) contain any of the given keywords.
 
-Format: `findc KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
+Format: `findc n/KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -114,8 +114,8 @@ Format: `findc KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `findc John` returns `john` and `John Doe`
-* `findc alex david` returns `Alex Yeoh`, `David Li`<br>
+* `findc n/John` returns `john` and `John Doe`
+* `findc n/alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ### Deleting a contractor : `delc`
@@ -128,9 +128,15 @@ Format: `delc INDEX`
 * The index refers to the index number shown in the displayed contractor list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
+<box type="warning" seamless>
+
+**Note:** Deleting a contractor will **not** delete their associated maintenance tasks. Any tasks previously assigned to the deleted contractor will still appear in the task list, but the contractor will be shown as `Unknown (deleted)`. It is recommended to delete associated tasks via `delt` before deleting a contractor.
+
+</box>
+
 Examples:
 * `listc` followed by `delc 2` deletes the 2nd contractor in the address book.
-* `findc Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
+* `findc n/Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
 
 ### Editing a contractor : `editc`
 
@@ -150,13 +156,28 @@ Example:
 
 ### Adding a task : `addt`
 
-Adds a maintenance task to the address book.
+Adds a maintenance task and assigns it to a contractor in the address book.
 
 Format: `addt f/FACILITY d/DATE (YYYY-MM-DD) c/CONTRACTOR_INDEX`
 
+* `FACILITY` must be between 1 and 50 characters.
+* `DATE` must be in `YYYY-MM-DD` format and must not be in the past.
+* `CONTRACTOR_INDEX` refers to the index number shown in the **currently displayed contractor list**.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+<box type="warning" seamless>
+
+**Caution:** Always run `listc` before using `addt` to ensure the contractor index refers to the full list. If you run `findc` first and then use `addt`, the index will be based on the filtered list which may assign the task to the wrong contractor.
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** A task cannot be added if another task for the same facility on the same date already exists.
+</box>
+
 Examples:
-* `addt f/Sports Hall d/2026-12-01 c/2`
-* `addt f/Function Room d/2026-06-20 c/4`
+* `listc` followed by `addt f/Sports Hall d/2026-12-01 c/2` adds a task for Sports Hall on 1 Dec 2026 assigned to the 2nd contractor in the full list.
+* `listc` followed by `addt f/Function Room d/2026-06-20 c/4` adds a task for Function Room on 20 Jun 2026 assigned to the 4th contractor.
 
 ### Listing all tasks : `listt`
 
@@ -192,6 +213,19 @@ Format: `donet INDEX`
 
 Examples:
 * `listt` followed by `donet 1` marks the 1st task in the task list as completed.
+
+### Viewing maintenance history for a facility : `history`
+
+Shows a list of all maintenance tasks associated with a specific facility.
+
+Format: `history f/FACILITY_NAME`
+
+* Lists all tasks for the specified facility.
+* If no tasks are found, a message will indicate that no maintenance history exists for that facility.
+
+Examples:
+* `history f/Sports Hall` displays the maintenance history for the "Sports Hall".
+* `history f/Function Room` displays the maintenance history for the "Function Room".
 
 ### Generating a monthly report : `report`
 
@@ -277,9 +311,10 @@ Action     | Format, Examples
 **Clear**  | `clear`
 **Delete** | `delc INDEX`<br> e.g., `delete 3`
 **Edit**   | `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]…​`
-**Find**   | `findc KEYWORD [s/SERVICE] [MORE_KEYWORDS]`<br> e.g., `findc James Jake`
+**Find**   | `findc n/KEYWORD [MORE_KEYWORDS]` or `findc s/KEYWORD [MORE_KEYWORDS]`<br> e.g., `findc n/James Jake`
 **List**   | `listc`
 **Sort**   | `sortt`
+**History**| `history f/FACILITY_NAME`<br> e.g., `history f/Sports Hall`
 **Help**   | `help`
 **Done**   | `donet INDEX`<br> e.g., `donet 1`
 **Report** | `report m/YEAR-MONTH`<br> e.g., `report m/2026-12`

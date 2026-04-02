@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACILITY;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -67,12 +68,19 @@ public class AddtCommand extends Command {
         validateContractorExists(model);
         validateNoDuplicate(model);
 
+        List<Person> allPersons = model.getAddressBook().getPersonList();
         Person contractor = model.getFilteredPersonList().get(contractorIndex.getZeroBased());
+
+        int fullListIndex = allPersons.indexOf(contractor) + 1;
+        if (fullListIndex == 0) {
+            throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
+        }
+
         Set<Tag> contractorTags = contractor.getTags();
         Service contractorService = contractor.getService();
 
         MaintenanceTask task = new MaintenanceTask(facility, date,
-                contractorIndex.getOneBased(), contractorTags, contractorService);
+                fullListIndex, contractorTags, contractorService);
 
         model.getMaintenanceTaskList().addTask(task);
 

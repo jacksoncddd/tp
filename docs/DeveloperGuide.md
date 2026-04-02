@@ -395,9 +395,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. The system should work on any mainstream OS with Java 17 installed.
-2. The system should be able to store at least 1000 contacts without noticeable performance degradation.
-3. The system should respond to user commands within 1 second under normal usage conditions.
+1. **Software Environment**: Should work on any mainstream OS (windows, Linux, macOS) with Java 17 or higher installed
+2. **Capacity**: Should be able to store up to 2,000 contacts and 5,000 maintenance tasks without a lag in search results exceeding 200ms
+3. **Responsiveness**: Any command that does not involve disk I/O should respond within 100ms
+4. **UI Fidelity**: The GUI should be usable at resolutions as low as 1280x720 and should not have visual glitches when resized
+5. **Data Integrity**: If the application crashes, the data stored in the local JSON file should not be corrupted
 
 *{More to be added}*
 
