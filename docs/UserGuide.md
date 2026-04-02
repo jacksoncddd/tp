@@ -6,7 +6,7 @@
 
 # EstateContacts User Guide
 
-EstateContacts is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EstateContacts can get your contact management tasks done faster than traditional GUI apps.
+EstateContacts is a **desktop address book app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EstateContacts can get your contact management tasks done faster than traditional GUI apps.
 
 ---
 ## Table of Contents
@@ -40,7 +40,7 @@ EstateContacts is a **desktop app for managing contacts, optimized for use via a
 
    * `listc` : Lists all contacts.
 
-   * `addc n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/Plumbing` : Adds a contact named `John Doe` to the Address Book.
+   * `addc n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/Plumbing` : Adds a contact named `John Doe` to EstateContacts.
 
    * `delc 3` : Deletes the 3rd contact shown in the current list.
 
@@ -82,7 +82,7 @@ EstateContacts is a **desktop app for managing contacts, optimized for use via a
 
 ### Adding a contractor : `addc`
 
-Adds a contractor to the address book.
+Adds a contractor to EstateContacts.
 
 Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…​`
 
@@ -97,7 +97,7 @@ Examples:
 
 ### Listing all contractors : `listc`
 
-Shows a list of all contractors in the address book.
+Shows a list of all contractors in EstateContacts.
 
 Format: `listc`
 
@@ -120,7 +120,7 @@ Examples:
 
 ### Deleting a contractor : `delc`
 
-Deletes the specified contractor from the address book.
+Deletes the specified contractor from EstateContacts.
 
 Format: `delc INDEX`
 
@@ -135,7 +135,7 @@ Format: `delc INDEX`
 </box>
 
 Examples:
-* `listc` followed by `delc 2` deletes the 2nd contractor in the address book.
+* `listc` followed by `delc 2` deletes the 2nd contractor in EstateContacts.
 * `findc n/Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
 
 ### Editing a contractor : `editc`
@@ -156,7 +156,7 @@ Example:
 
 ### Adding a task : `addt`
 
-Adds a maintenance task and assigns it to a contractor in the address book.
+Adds a maintenance task and assigns it to a contractor in EstateContacts.
 
 Format: `addt f/FACILITY d/DATE (YYYY-MM-DD) c/CONTRACTOR_INDEX`
 
@@ -181,7 +181,7 @@ Examples:
 
 ### Listing all tasks : `listt`
 
-Shows a list of all tasks in the address book.
+Shows a list of all tasks in EstateContacts.
 
 Format: `listt`
 
@@ -193,7 +193,7 @@ Format: `sortt`
 
 ### Deleting a task : `delt`
 
-Deletes the specified task from the address book.
+Deletes the specified task from EstateContacts.
 
 Format: `delt INDEX`
 
@@ -255,7 +255,7 @@ Format: `help`
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all contractor entries from EstateContacts.
 
 Format: `clear`
 

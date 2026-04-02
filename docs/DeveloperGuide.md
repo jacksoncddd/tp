@@ -338,7 +338,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 |----------|---------|----------------------------------|-----------------------------------------------------|
 | `* * *`  | user    | view a list of contractors       | browse available vendors                            |
 | `* * *`  | user    | add contractor contact details   | store essential contacts in one place               |
-| `* * *`  | user    | search contractors by name       | find a contractor quickly                           |
+| `* * *`  | user    | search contractors by name or service | find a contractor quickly                           |
 | `* * *`  | user    | add a maintanence task           | track scheduled work                                |
 | `* * *`  | user    | delete contractor records        | remove outdated or incorrect contacts               |
 | `* * *`  | user    | delete a maintanence task        | remove tasks that are no longer required            |
@@ -352,7 +352,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `EstateContacts` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Add a contractor contact**
+**Use case: UC01 - Add a contractor contact**
 
 **MSS**
 
@@ -371,8 +371,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
+**Use case: UC02 - Find contractor by name or service**
 
--**Use case: List maintenance tasks**
+**MSS**
+
+1. User requests to find contractor.
+2. EstateContacts prompts for either contact name or service.
+3. User provides either name or service.
+4. EstateContacts displays matching list of contacts. 
+
+   Use case ends.
+
+**Extensions**
+* 3a. User provides invalid search details. 
+
+    * 3a1. EstateContacts shows an error message.
+  
+    Use case resumes at step 2.
+
+
+-**Use case: UC03 - List maintenance tasks**
 
 **MSS**
 
