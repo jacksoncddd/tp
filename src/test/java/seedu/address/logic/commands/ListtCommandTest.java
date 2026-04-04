@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
  * Contains unit tests for ListtCommand.
@@ -60,5 +62,19 @@ public class ListtCommandTest {
 
         assert feedback.contains("Sports Hall");
         assert feedback.contains("Swimming Pool");
+    }
+
+    @Test
+    public void execute_afterPersonFilter_usesUnfilteredContractorIndex() throws Exception {
+        new AddtCommand("Sports Hall",
+                LocalDate.of(2026, 12, 1),
+                seedu.address.commons.core.index.Index.fromOneBased(1)).execute(model);
+
+        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(List.of("Meier")));
+
+        CommandResult result = new ListtCommand().execute(model);
+        String feedback = result.getFeedbackToUser();
+
+        assert feedback.contains("Contractor: Alice Pauline");
     }
 }

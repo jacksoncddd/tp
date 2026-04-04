@@ -21,7 +21,7 @@ public class ListtCommand extends Command {
         assert model != null : "Model should not be null";
         MaintenanceTaskList taskList = model.getMaintenanceTaskList();
         List<MaintenanceTask> tasks = taskList.getTasks();
-        List<Person> personList = model.getFilteredPersonList();
+        List<Person> allPersons = model.getAddressBook().getPersonList();
 
         if (tasks.isEmpty()) {
             return new CommandResult(MESSAGE_NO_TASKS);
@@ -36,8 +36,8 @@ public class ListtCommand extends Command {
             String tagsString;
             String service;
 
-            if (contractorIdx < personList.size()) {
-                Person contractor = personList.get(contractorIdx);
+            if (contractorIdx >= 0 && contractorIdx < allPersons.size()) {
+                Person contractor = allPersons.get(contractorIdx);
                 contractorName = contractor.getName().fullName;
                 service = contractor.getService().toString();
                 tagsString = task.getTags().stream()
