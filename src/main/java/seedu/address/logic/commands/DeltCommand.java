@@ -53,10 +53,9 @@ public class DeltCommand extends Command {
 
         List<Person> allPersons = model.getAddressBook().getPersonList();
         int contractorIdx = taskToDelete.getContractorIndex() - 1;
-        if (contractorIdx < 0 || contractorIdx >= allPersons.size()) {
-            throw new CommandException("Contractor linked to this task no longer exists.");
-        }
-        Person contractor = allPersons.get(contractorIdx);
+        String contractorName = (contractorIdx >= 0 && contractorIdx < allPersons.size())
+                ? allPersons.get(contractorIdx).getName().fullName
+                : "Unknown (deleted)";
 
         taskList.removeTask(targetIndex.getZeroBased());
 
@@ -64,7 +63,7 @@ public class DeltCommand extends Command {
                 .map(tag -> tag.tagName)
                 .collect(java.util.stream.Collectors.joining(", "));
         String taskDisplay = taskToDelete.getFacility() + " on " + taskToDelete.getDate()
-                + " (Contractor: " + contractor.getName().fullName
+                + " (Contractor: " + contractorName
                 + " | Service: " + taskToDelete.getContractorService()
                 + " | Tags: [" + tagsString + "])";
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskDisplay));
