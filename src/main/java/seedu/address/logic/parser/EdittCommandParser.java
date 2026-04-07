@@ -26,7 +26,7 @@ public class EdittCommandParser implements Parser<EdittCommand> {
      *
      * @param args raw user arguments.
      * @return parsed {@code EdittCommand}.
-     * @throws ParseException if the user input does not conform to the expected format.
+     * @throws ParseException if the user input does not adhere to the expected format.
      */
     @Override
     public EdittCommand parse(String args) throws ParseException {

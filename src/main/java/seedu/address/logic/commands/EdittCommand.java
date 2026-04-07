@@ -103,11 +103,12 @@ public class EdittCommand extends Command {
         }
 
         Index updatedContractorFilteredIndex = editTaskDescriptor.getContractorIndex().get();
-        if (updatedContractorFilteredIndex.getZeroBased() >= model.getFilteredPersonList().size()) {
+        int zeroBasedIndex = updatedContractorFilteredIndex.getZeroBased();
+        if (zeroBasedIndex >= model.getFilteredPersonList().size()) {
             throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
         }
 
-        Person contractor = model.getFilteredPersonList().get(updatedContractorFilteredIndex.getZeroBased());
+        Person contractor = model.getFilteredPersonList().get(zeroBasedIndex);
         int fullListIndex = model.getAddressBook().getPersonList().indexOf(contractor) + 1;
         if (fullListIndex <= 0) {
             throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
