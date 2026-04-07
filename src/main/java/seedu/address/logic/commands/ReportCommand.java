@@ -83,14 +83,13 @@ public class ReportCommand extends Command {
             }
 
             int contractorIdx = contractorIndex - 1;
-            List<Person> personList = model.getFilteredPersonList();
 
             String contractorName;
             String service;
             String tagsString;
 
-            if (contractorIdx < personList.size()) {
-                Person contractor = personList.get(contractorIdx);
+            if (contractorIdx < allPersons.size()) {
+                Person contractor = allPersons.get(contractorIdx);
                 contractorName = contractor.getName().fullName;
                 service = contractor.getService().toString();
                 tagsString = contractor.getTags().stream()
