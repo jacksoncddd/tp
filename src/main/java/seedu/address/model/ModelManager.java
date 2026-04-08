@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -39,7 +40,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
 
-        // FIX: Bind to `this.taskList` instead of
+        // Bind to `this.taskList` instead of
         // `this.addressBook.getMaintenanceTaskList()`
         this.filteredMaintenanceTasks = new FilteredList<>(
                 this.taskList.asUnmodifiableObservableList());
@@ -120,6 +121,33 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
+
+        // Cascading update for tasks
+        if (!target.isSamePerson(editedPerson)
+                || !target.getService().equals(editedPerson.getService())
+                || !target.getTags().equals(editedPerson.getTags())) {
+
+            List<MaintenanceTask> tasks = this.taskList.getTasks();
+            for (int i = 0; i < tasks.size(); i++) {
+                MaintenanceTask task = tasks.get(i);
+
+                if (task.getContractorName().equals(target.getName())) {
+
+                    MaintenanceTask updatedTask = new MaintenanceTask(
+                            task.getFacility(),
+                            task.getDate(),
+                            editedPerson.getName(),
+                            editedPerson.getTags(),
+                            editedPerson.getService());
+
+                    if (task.isCompleted()) {
+                        updatedTask.markAsCompleted();
+                    }
+
+                    tasks.set(i, updatedTask);
+                }
+            }
+        }
     }
 
     @Override
@@ -136,8 +164,7 @@ public class ModelManager implements Model {
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the
-     * internal list of
-     * {@code versionedAddressBook}
+     * internal list of {@code versionedAddressBook}
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
