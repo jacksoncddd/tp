@@ -15,6 +15,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Service;
 import seedu.address.model.tag.Tag;
@@ -41,7 +42,7 @@ public class EdittCommand extends Command {
     public static final String MESSAGE_DUPLICATE_TASK = "A task for this facility on the same date already exists.";
     public static final String MESSAGE_INVALID_CONTRACTOR_INDEX = "The contractor index provided is invalid.";
     public static final String MESSAGE_CANNOT_EDIT_COMPLETED_TASK =
-            "Cannot edit a completed task. Completed tasks are kept for reporting.";
+        "Cannot edit a completed task. Completed tasks are kept for reporting.";
 
     private final Index targetIndex;
     private final EditTaskDescriptor editTaskDescriptor;
@@ -49,7 +50,7 @@ public class EdittCommand extends Command {
     /**
      * Creates an {@code EdittCommand}.
      *
-     * @param targetIndex index of the task in the displayed task list.
+     * @param targetIndex        index of the task in the displayed task list.
      * @param editTaskDescriptor details to edit the task with.
      */
     public EdittCommand(Index targetIndex, EditTaskDescriptor editTaskDescriptor) {
@@ -73,10 +74,31 @@ public class EdittCommand extends Command {
             throw new CommandException(MESSAGE_CANNOT_EDIT_COMPLETED_TASK);
         }
 
-        int updatedContractorFullIndex = resolveUpdatedContractorFullIndex(model, taskToEdit);
-        Person updatedContractor = resolvePersonByFullIndex(model, updatedContractorFullIndex);
+        Name updatedContractorName;
+        Service updatedService;
+        Set<Tag> updatedTags;
+
+        if (editTaskDescriptor.getContractorIndex().isPresent()) {
+            Index newContractorIndex = editTaskDescriptor.getContractorIndex().get();
+            List<Person> lastShownPersonList = model.getFilteredPersonList();
+
+            if (newContractorIndex.getZeroBased() >= lastShownPersonList.size()) {
+                throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
+            }
+
+            Person updatedContractor = lastShownPersonList.get(newContractorIndex.getZeroBased());
+            updatedContractorName = updatedContractor.getName();
+            updatedService = updatedContractor.getService();
+            updatedTags = updatedContractor.getTags();
+        } else {
+            // Otherwise, retain the contractor details from the original task
+            updatedContractorName = taskToEdit.getContractorName();
+            updatedService = taskToEdit.getContractorService();
+            updatedTags = taskToEdit.getTags();
+        }
+
         MaintenanceTask editedTask = createEditedTask(taskToEdit, editTaskDescriptor,
-                updatedContractorFullIndex, updatedContractor);
+                updatedContractorName, updatedTags, updatedService);
 
         if (isDuplicateTask(taskList, editedTask, targetIndex.getZeroBased())) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
@@ -88,59 +110,24 @@ public class EdittCommand extends Command {
                 .map(tag -> tag.tagName)
                 .collect(Collectors.joining(", "));
         String taskDisplay = editedTask.getFacility() + " on " + editedTask.getDate()
-                + " (Contractor: " + updatedContractor.getName().fullName
+                + " (Contractor: " + updatedContractorName.fullName
                 + " | Service: " + editedTask.getContractorService()
                 + " | Tags: [" + tagsString + "])";
+
         return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, taskDisplay));
     }
 
     /**
-     * Resolves the contractor full-list index after applying descriptor changes.
-     */
-    private int resolveUpdatedContractorFullIndex(Model model, MaintenanceTask taskToEdit) throws CommandException {
-        if (editTaskDescriptor.getContractorIndex().isEmpty()) {
-            return taskToEdit.getContractorIndex();
-        }
-
-        Index updatedContractorFilteredIndex = editTaskDescriptor.getContractorIndex().get();
-        int zeroBasedIndex = updatedContractorFilteredIndex.getZeroBased();
-        if (zeroBasedIndex >= model.getFilteredPersonList().size()) {
-            throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
-        }
-
-        Person contractor = model.getFilteredPersonList().get(zeroBasedIndex);
-        int fullListIndex = model.getAddressBook().getPersonList().indexOf(contractor) + 1;
-        if (fullListIndex <= 0) {
-            throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
-        }
-
-        return fullListIndex;
-    }
-
-    /**
-     * Resolves a contractor from the full person list using a 1-based full list index.
-     */
-    private Person resolvePersonByFullIndex(Model model, int contractorFullIndex) throws CommandException {
-        int zeroBased = contractorFullIndex - 1;
-        List<Person> allPersons = model.getAddressBook().getPersonList();
-        if (zeroBased < 0 || zeroBased >= allPersons.size()) {
-            throw new CommandException("Contractor linked to this task no longer exists.");
-        }
-        return allPersons.get(zeroBased);
-    }
-
-    /**
-     * Creates a new {@code MaintenanceTask} by applying descriptor changes over {@code taskToEdit}.
+     * Creates a new {@code MaintenanceTask} by applying descriptor changes over
+     * {@code taskToEdit}.
      */
     private static MaintenanceTask createEditedTask(MaintenanceTask taskToEdit, EditTaskDescriptor descriptor,
-                                                    int contractorFullIndex, Person contractor) {
+            Name contractorName, Set<Tag> tags, Service service) {
         String updatedFacility = descriptor.getFacility().orElse(taskToEdit.getFacility());
         LocalDate updatedDate = descriptor.getDate().orElse(taskToEdit.getDate());
-        Set<Tag> updatedTags = contractor.getTags();
-        Service updatedService = contractor.getService();
 
         MaintenanceTask editedTask = new MaintenanceTask(updatedFacility, updatedDate,
-                contractorFullIndex, updatedTags, updatedService);
+                contractorName, tags, service);
 
         if (taskToEdit.isCompleted()) {
             editedTask.markAsCompleted();
@@ -149,10 +136,11 @@ public class EdittCommand extends Command {
     }
 
     /**
-     * Returns true if a task with the same facility and date exists, excluding the edited task itself.
+     * Returns true if a task with the same facility and date exists, excluding the
+     * edited task itself.
      */
     private static boolean isDuplicateTask(List<MaintenanceTask> taskList, MaintenanceTask candidate,
-                                           int excludedIndex) {
+            int excludedIndex) {
         for (int i = 0; i < taskList.size(); i++) {
             if (i == excludedIndex) {
                 continue;
@@ -198,7 +186,8 @@ public class EdittCommand extends Command {
         /**
          * Creates an empty {@code EditTaskDescriptor}.
          */
-        public EditTaskDescriptor() {}
+        public EditTaskDescriptor() {
+        }
 
         /**
          * Copy constructor.

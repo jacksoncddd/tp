@@ -16,6 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.task.MaintenanceTask;
 
@@ -54,7 +55,9 @@ public class EdittCommandTest {
         command.execute(model);
 
         assertEquals(newDate, model.getMaintenanceTaskList().getTasks().get(0).getDate());
-        assertEquals(2, model.getMaintenanceTaskList().getTasks().get(0).getContractorIndex());
+
+        Name expectedName = model.getFilteredPersonList().get(1).getName();
+        assertEquals(expectedName, model.getMaintenanceTaskList().getTasks().get(0).getContractorName());
     }
 
     @Test
@@ -113,11 +116,11 @@ public class EdittCommandTest {
         MaintenanceTask editedTask = tasks.get(0);
         assertEquals("Main Lobby", editedTask.getFacility());
         assertEquals(originalTask.getDate(), editedTask.getDate());
-        assertEquals(originalTask.getContractorIndex(), editedTask.getContractorIndex());
+        assertEquals(originalTask.getContractorName(), editedTask.getContractorName());
     }
 
     @Test
-    public void execute_editContractorWithFilteredList_mapsToFullListIndex() throws Exception {
+    public void execute_editContractorWithFilteredList_success() throws Exception {
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(List.of("George")));
         assertEquals(1, model.getFilteredPersonList().size());
 
@@ -127,6 +130,8 @@ public class EdittCommandTest {
 
         command.execute(model);
 
-        assertEquals(7, model.getMaintenanceTaskList().getTasks().get(0).getContractorIndex());
+        // Assert that the contractor assigned is indeed George
+        Name expectedName = model.getFilteredPersonList().get(0).getName();
+        assertEquals(expectedName, model.getMaintenanceTaskList().getTasks().get(0).getContractorName());
     }
 }
