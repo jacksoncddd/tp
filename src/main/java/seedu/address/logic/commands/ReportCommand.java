@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Name;
 import seedu.address.model.task.MaintenanceTask;
 
 /**
@@ -32,8 +32,16 @@ public class ReportCommand extends Command {
     private final YearMonth yearMonth;
 
     /**
-     * Creates a ReportCommand to generate a report for the given {@code YearMonth}.
+     * Constructs a {@code ReportCommand} that generates a monthly maintenance
+     * report
+     * for the specified year and month.
+     *
+     * @param yearMonth the {@link YearMonth} representing the month for which the
+     *                  maintenance report should be generated; must not be
+     *                  {@code null}
+     * @throws NullPointerException if {@code yearMonth} is {@code null}
      */
+
     public ReportCommand(YearMonth yearMonth) {
         requireNonNull(yearMonth);
         this.yearMonth = yearMonth;
@@ -45,52 +53,43 @@ public class ReportCommand extends Command {
 
         List<MaintenanceTask> allTasks = model.getMaintenanceTaskList().getTasks();
 
-        // Filter tasks by the specified month
         List<MaintenanceTask> filteredTasks = allTasks.stream()
                 .filter(task -> YearMonth.from(task.getDate()).equals(yearMonth))
-                .filter(task -> task.isCompleted())
+                .filter(MaintenanceTask::isCompleted)
                 .collect(Collectors.toList());
 
         if (filteredTasks.isEmpty()) {
             return new CommandResult(String.format(MESSAGE_NO_TASKS, yearMonth));
         }
 
-        // Group tasks by contractor index
-        Map<Integer, List<MaintenanceTask>> tasksByContractor = new LinkedHashMap<>();
+        // Group tasks by contractor Name instead of Index
+        Map<Name, List<MaintenanceTask>> tasksByContractor = new LinkedHashMap<>();
         for (MaintenanceTask task : filteredTasks) {
             tasksByContractor
-                    .computeIfAbsent(task.getContractorIndex(), k -> new java.util.ArrayList<>())
+                    .computeIfAbsent(task.getContractorName(), k -> new java.util.ArrayList<>())
                     .add(task);
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(MESSAGE_SUCCESS, yearMonth, filteredTasks.size()));
 
-        List<Person> allPersons = model.getAddressBook().getPersonList();
-
         int contractorNumber = 1;
-        for (Map.Entry<Integer, List<MaintenanceTask>> entry : tasksByContractor.entrySet()) {
-            int contractorIndex = entry.getKey();
+        for (Map.Entry<Name, List<MaintenanceTask>> entry : tasksByContractor.entrySet()) {
+            Name contractorName = entry.getKey();
             List<MaintenanceTask> tasks = entry.getValue();
 
-            // Look up contractor details
-            int idx = contractorIndex - 1;
-            if (idx < 0 || idx >= allPersons.size()) {
-                sb.append(contractorNumber).append(". [Contractor #").append(contractorIndex)
-                        .append(" no longer exists] | Tasks: ").append(tasks.size()).append("\n");
-                contractorNumber++;
-                continue;
-            }
-
-            Person contractor = allPersons.get(idx);
-            String contractorName = contractor.getName().fullName;
-            String service = contractor.getService().toString();
-            String tagsString = contractor.getTags().stream()
+            // Since tasks are grouped by contractor, we can fetch service and tags from the
+            // first task
+            MaintenanceTask representativeTask = tasks.get(0);
+            String service = representativeTask.getContractorService() != null
+                    ? representativeTask.getContractorService().toString()
+                    : "Unknown";
+            String tagsString = representativeTask.getTags().stream()
                     .map(tag -> tag.tagName)
                     .collect(Collectors.joining(", "));
 
             sb.append(contractorNumber).append(". ")
-                    .append(contractorName)
+                    .append(contractorName.fullName)
                     .append(" | Service: ").append(service)
                     .append(" | Tags: [").append(tagsString).append("]")
                     .append(" | Tasks: ").append(tasks.size()).append("\n");

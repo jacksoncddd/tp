@@ -14,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Name;
 
 /**
  * Contains unit tests for AddtCommand.
@@ -66,7 +67,11 @@ public class AddtCommandTest {
         AddtCommand command = new AddtCommand("Sports Hall",
                 LocalDate.of(2026, 12, 1), Index.fromOneBased(1));
         command.execute(model);
-        assertEquals(1, model.getMaintenanceTaskList()
-                .getTasks().get(0).getContractorIndex());
+
+        // Since we added using index 1, the name should be the name of the 1st person
+        Name expectedName = model.getFilteredPersonList().get(0).getName();
+
+        assertEquals(expectedName, model.getMaintenanceTaskList()
+                .getTasks().get(0).getContractorName());
     }
 }

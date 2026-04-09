@@ -30,6 +30,7 @@ public class ClearCommand extends Command {
             return new CommandResult(MESSAGE_CONFIRMATION_REQUIRED);
         }
         model.setAddressBook(new AddressBook());
+        model.getMaintenanceTaskList().clearTasks();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

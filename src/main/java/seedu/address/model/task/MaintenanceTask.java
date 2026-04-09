@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Service;
 import seedu.address.model.tag.Tag;
+
 
 /**
  * Represents a maintenance task in the task list.
@@ -18,7 +20,8 @@ public class MaintenanceTask {
 
     private final String facility;
     private final LocalDate date;
-    private final int contractorIndex;
+    //private final int contractorIndex;
+    private final Name contractorName;
     private final Set<Tag> tags = new HashSet<>();
     private final Service contractorService;
     private boolean isCompleted;
@@ -32,16 +35,16 @@ public class MaintenanceTask {
      * @param contractorIndex The 1-based index of the assigned contractor.
      * @param tags            The set of tags associated with the task.
      */
-    public MaintenanceTask(String facility, LocalDate date, int contractorIndex, Set<Tag> tags, Service service) {
+    public MaintenanceTask(String facility, LocalDate date, Name contractorName, Set<Tag> tags, Service service) {
         assert facility != null : "Facility should not be null";
         assert !facility.isBlank() : "Facility should not be blank";
         assert date != null : "Date should not be null";
-        assert contractorIndex > 0 : "Contractor index should be positive";
+        assert contractorName != null : "Contractor name should not be null";
         assert tags != null : "Tags should not be null";
         assert service != null : "Service should not be null";
         this.facility = facility;
         this.date = date;
-        this.contractorIndex = contractorIndex;
+        this.contractorName = contractorName;
         this.tags.addAll(tags);
         this.contractorService = service;
         this.isCompleted = false;
@@ -65,9 +68,8 @@ public class MaintenanceTask {
         return date;
     }
 
-    /** Returns the 1-based contractor index. */
-    public int getContractorIndex() {
-        return contractorIndex;
+    public Name getContractorName() {
+        return contractorName;
     }
 
     public Set<Tag> getTags() {
@@ -93,12 +95,12 @@ public class MaintenanceTask {
                 .collect(java.util.stream.Collectors.joining(", "));
 
         return facility + " on " + date
-                + " (Contractor #" + contractorIndex + " [" + tagsString + "])";
+                + " (Contractor: " + contractorName + " [" + tagsString + "])";
     }
 
     /**
      * Returns true if both maintenance tasks have the same facility, date,
-     * contractor index, and tags.
+     * contractor name, and tags.
      */
     @Override
     public boolean equals(Object other) {
@@ -114,7 +116,7 @@ public class MaintenanceTask {
         MaintenanceTask otherTask = (MaintenanceTask) other;
         return facility.equals(otherTask.facility)
                 && date.equals(otherTask.date)
-                && contractorIndex == otherTask.contractorIndex
+                && contractorName.equals(otherTask.contractorName)
                 && tags.equals(otherTask.tags);
     }
 
@@ -123,7 +125,7 @@ public class MaintenanceTask {
      */
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(facility, date, contractorIndex, tags);
+        return java.util.Objects.hash(facility, date, contractorName, tags);
     }
 
 }

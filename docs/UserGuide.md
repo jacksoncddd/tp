@@ -6,7 +6,7 @@
 
 # EstateContacts User Guide
 
-EstateContacts is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EstateContacts can get your contact management tasks done faster than traditional GUI apps.
+EstateContacts is a **desktop address book app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EstateContacts can get your contact management tasks done faster than traditional GUI apps.
 
 ---
 ## Table of Contents
@@ -27,7 +27,7 @@ EstateContacts is a **desktop app for managing contacts, optimized for use via a
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F13-3/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
@@ -40,7 +40,7 @@ EstateContacts is a **desktop app for managing contacts, optimized for use via a
 
    * `listc` : Lists all contacts.
 
-   * `addc n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/Plumbing` : Adds a contact named `John Doe` to the Address Book.
+   * `addc n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/Plumbing` : Adds a contact named `John Doe` to EstateContacts.
 
    * `delc 3` : Deletes the 3rd contact shown in the current list.
 
@@ -82,7 +82,7 @@ EstateContacts is a **desktop app for managing contacts, optimized for use via a
 
 ### Adding a contractor : `addc`
 
-Adds a contractor to the address book.
+Adds a contractor to EstateContacts.
 
 Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…​`
 
@@ -97,15 +97,15 @@ Examples:
 
 ### Listing all contractors : `listc`
 
-Shows a list of all contractors in the address book.
+Shows a list of all contractors in EstateContacts.
 
 Format: `listc`
 
 ### Locating contractors by name or service : `findc`
 
-Finds contractors whose names or service contain any of the given keywords.
+Finds contractors whose names (n/) or service (s/) contain any of the given keywords.
 
-Format: `findc KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
+Format: `findc n/KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -114,13 +114,13 @@ Format: `findc KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `findc John` returns `john` and `John Doe`
-* `findc alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `findc n/John` returns `john` and `John Doe`
+* `findc n/amy bob` returns `Amy Lee`, `Bob Tan`<br>
+  ![result for 'find amy bob'](images/findAmyBobResult.png)
 
 ### Deleting a contractor : `delc`
 
-Deletes the specified contractor from the address book.
+Deletes the specified contractor from EstateContacts.
 
 Format: `delc INDEX`
 
@@ -128,9 +128,15 @@ Format: `delc INDEX`
 * The index refers to the index number shown in the displayed contractor list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
+<box type="warning" seamless>
+
+**Note:** Deleting a contractor will **not** delete their associated maintenance tasks. Any tasks previously assigned to the deleted contractor will still appear in the task list, but the contractor will be shown as `Unknown (deleted)`. It is recommended to delete associated tasks via `delt` before deleting a contractor.
+
+</box>
+
 Examples:
-* `listc` followed by `delc 2` deletes the 2nd contractor in the address book.
-* `findc Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
+* `listc` followed by `delc 2` deletes the 2nd contractor in EstateContacts.
+* `findc n/Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
 
 ### Editing a contractor : `editc`
 
@@ -150,7 +156,7 @@ Example:
 
 ### Adding a task : `addt`
 
-Adds a maintenance task and assigns it to a contractor in the address book.
+Adds a maintenance task and assigns it to a contractor in EstateContacts.
 
 Format: `addt f/FACILITY d/DATE (YYYY-MM-DD) c/CONTRACTOR_INDEX`
 
@@ -175,7 +181,7 @@ Examples:
 
 ### Listing all tasks : `listt`
 
-Shows a list of all tasks in the address book.
+Shows a list of all tasks in EstateContacts.
 
 Format: `listt`
 
@@ -187,12 +193,13 @@ Format: `sortt`
 
 ### Deleting a task : `delt`
 
-Deletes the specified task from the address book.
+Deletes the specified task from EstateContacts.
 
 Format: `delt INDEX`
 
 * Deletes the task at the specified `INDEX`.
 * The index refers to the index number shown in the displayed maintenance tasklist.
+* Completed tasks (marked via `donet`) **cannot** be deleted, as they are kept for monthly reporting purposes.
 
 ### Marking a task as complete : `donet`
 
@@ -207,6 +214,19 @@ Format: `donet INDEX`
 
 Examples:
 * `listt` followed by `donet 1` marks the 1st task in the task list as completed.
+
+### Viewing maintenance history for a facility : `history`
+
+Shows a list of all maintenance tasks associated with a specific facility.
+
+Format: `history f/FACILITY_NAME`
+
+* Lists all tasks for the specified facility.
+* If no tasks are found, a message will indicate that no maintenance history exists for that facility.
+
+Examples:
+* `history f/Sports Hall` displays the maintenance history for the "Sports Hall".
+* `history f/Function Room` displays the maintenance history for the "Function Room".
 
 ### Generating a monthly report : `report`
 
@@ -236,7 +256,7 @@ Format: `help`
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all contractor entries from EstateContacts.
 
 Format: `clear`
 
@@ -286,15 +306,20 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…​` <br> e.g., `addc n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/Plumbing t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delc INDEX`<br> e.g., `delete 3`
-**Edit**   | `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]…​`
-**Find**   | `findc KEYWORD [s/SERVICE] [MORE_KEYWORDS]`<br> e.g., `findc James Jake`
-**List**   | `listc`
-**Sort**   | `sortt`
-**Help**   | `help`
-**Done**   | `donet INDEX`<br> e.g., `donet 1`
-**Report** | `report m/YEAR-MONTH`<br> e.g., `report m/2026-12`
+Action          | Format, Examples
+----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add**         | `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…​` <br> e.g., `addc n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/Plumbing t/friend t/colleague`
+**Clear**       | `clear confirm`
+**Delete**      | `delc INDEX`<br> e.g., `delc 3`
+**Edit**        | `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]…​`
+**Find**        | `findc n/KEYWORD [MORE_KEYWORDS]` or `findc s/KEYWORD [MORE_KEYWORDS]`<br> e.g., `findc n/James Jake`
+**List**        | `listc`
+**Add Task**    | `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`<br> e.g., `addt f/Sports Hall d/2026-12-01 c/2`
+**Delete Task** | `delt INDEX`<br> e.g., `delt 1`
+**Done Task**   | `donet INDEX`<br> e.g., `donet 1`
+**List Tasks**  | `listt`
+**Sort Tasks**  | `sortt`
+**History**     | `history f/FACILITY_NAME`<br> e.g., `history f/Sports Hall`
+**Report**      | `report m/YEAR-MONTH`<br> e.g., `report m/2026-12`
+**Help**        | `help`
+**Exit**        | `exit`

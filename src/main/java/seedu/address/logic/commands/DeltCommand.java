@@ -9,9 +9,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
 import seedu.address.model.task.MaintenanceTask;
-import seedu.address.model.task.MaintenanceTaskList;
 
 /**
  * Delete maintenance task
@@ -37,23 +35,29 @@ public class DeltCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        MaintenanceTaskList taskList = model.getMaintenanceTaskList();
-        List<MaintenanceTask> lastShownList = taskList.getTasks();
+        List<MaintenanceTask> lastShownList = model.getFilteredMaintenanceTaskList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_INDEX);
         }
 
         MaintenanceTask taskToDelete = lastShownList.get(targetIndex.getZeroBased());
-        taskList.removeTask(targetIndex.getZeroBased());
 
-        Person contractor = model.getFilteredPersonList()
-                .get(taskToDelete.getContractorIndex() - 1);
+        if (taskToDelete.isCompleted()) {
+            throw new CommandException(
+                    "Cannot delete a completed task. Completed tasks are kept for reporting.");
+        }
+
+        String contractorNameStr = taskToDelete.getContractorName() != null
+            ? taskToDelete.getContractorName().fullName : "Unknown (deleted)";
+
+        model.getMaintenanceTaskList().removeTask(taskToDelete);
+
         String tagsString = taskToDelete.getTags().stream()
                 .map(tag -> tag.tagName)
                 .collect(java.util.stream.Collectors.joining(", "));
         String taskDisplay = taskToDelete.getFacility() + " on " + taskToDelete.getDate()
-                + " (Contractor: " + contractor.getName().fullName
+                + " (Contractor: " + contractorNameStr
                 + " | Service: " + taskToDelete.getContractorService()
                 + " | Tags: [" + tagsString + "])";
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskDisplay));

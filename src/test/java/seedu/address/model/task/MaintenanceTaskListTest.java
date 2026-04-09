@@ -10,6 +10,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Service;
 import seedu.address.model.tag.Tag;
 
@@ -27,7 +28,7 @@ public class MaintenanceTaskListTest {
         sampleTask = new MaintenanceTask(
                 "Sports Hall",
                 LocalDate.of(2026, 12, 1),
-                1,
+                new Name("Alice Pauline"),
                 Set.of(new Tag("electrician")),
                 new Service("Electrician"));
     }
@@ -74,7 +75,7 @@ public class MaintenanceTaskListTest {
         MaintenanceTask anotherTask = new MaintenanceTask(
                 "Swimming Pool",
                 LocalDate.of(2026, 12, 5),
-                2,
+                new Name("Benson Meier"),
                 Set.of(new Tag("plumber")),
                 new Service("Plumber"));
         taskList.addTask(anotherTask);
@@ -86,13 +87,13 @@ public class MaintenanceTaskListTest {
         MaintenanceTask laterTask = new MaintenanceTask(
                 "Swimming Pool",
                 LocalDate.of(2026, 12, 15),
-                2,
+                new Name("Benson Meier"),
                 Set.of(new Tag("plumber")),
                 new Service("Plumber"));
         MaintenanceTask earlierTask = new MaintenanceTask(
                 "Sports Hall",
                 LocalDate.of(2026, 12, 1),
-                1,
+                new Name("Alice Pauline"),
                 Set.of(new Tag("electrician")),
                 new Service("Electrician"));
 

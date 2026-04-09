@@ -15,9 +15,38 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class HelpWindow extends UiPart<Stage> {
 
-    public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
+    public static final String USERGUIDE_URL =
+            "https://ay2526s2-cs2103-f13-3.github.io/tp/UserGuide.html#command-summary";
+    public static final String HELP_MESSAGE = """
+            Quick start:
+            1) Add and list contractors, then add tasks tied to contractor indexes.
+            2) Use listc / listt to refresh contractors/ tasks views.
+            3) Use report and history to review completed work.
 
+            Contractor commands:
+            - addc n/NAME p/PHONE e/EMAIL a/ADDRESS s/SERVICE [t/TAG]...
+            - listc
+            - findc n/KEYWORD [MORE_KEYWORDS]... or s/KEYWORD [MORE_KEYWORDS]...
+            - editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]...
+            - delc INDEX
+
+            Task commands:
+            - addt f/FACILITY d/YYYY-MM-DD c/CONTRACTOR_INDEX
+            - listt
+            - editt INDEX [f/FACILITY] [d/YYYY-MM-DD] [c/CONTRACTOR_INDEX]
+            - delt INDEX
+            - donet INDEX
+            - sortt
+            - history f/FACILITY
+            - report m/YYYY-MM
+
+            System commands:
+            - help
+            - clear (asks for confirmation)
+            - exit
+
+            Full guide:
+            """ + USERGUIDE_URL;
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 

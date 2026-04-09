@@ -18,6 +18,11 @@ public class MaintenanceTaskList {
         tasks.add(task);
     }
 
+    /** Removes all tasks from the list. */
+    public void clearTasks() {
+        tasks.clear();
+    }
+
     /**
      * Removes the task at the specified index from the list.
      * @param index The 0-based index of the task to remove.
@@ -26,6 +31,14 @@ public class MaintenanceTaskList {
         assert index >= 0 : "Index should not be negative";
         assert index < tasks.size() : "Index should be within list size";
         tasks.remove(index);
+    }
+
+    /**
+     * Removes the given task from the list by reference.
+     * @param task The task to remove.
+     */
+    public void removeTask(MaintenanceTask task) {
+        tasks.remove(task);
     }
 
     public List<MaintenanceTask> getTasks() {
@@ -69,6 +82,6 @@ public class MaintenanceTaskList {
         tasks.sort(Comparator
                 .comparing(MaintenanceTask::getDate)
                 .thenComparing(MaintenanceTask::getFacility, String.CASE_INSENSITIVE_ORDER)
-                .thenComparingInt(MaintenanceTask::getContractorIndex));
+                .thenComparing(t -> t.getContractorName().fullName, String.CASE_INSENSITIVE_ORDER));
     }
 }

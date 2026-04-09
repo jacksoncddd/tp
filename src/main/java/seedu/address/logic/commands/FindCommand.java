@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -19,9 +20,11 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names or services contain "
             + "any of the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]... or s/KEYWORD [MORE_KEYWORDS]...\n"
-            + "Examples: " + COMMAND_WORD + " alex david"
+            + "Parameters: n/KEYWORD [MORE_KEYWORDS]... or s/KEYWORD [MORE_KEYWORDS]...\n"
+            + "Examples: " + COMMAND_WORD + " n/alex david"
             + ", " + COMMAND_WORD + " s/Electrical";
+    public static final String MESSAGE_NO_PERSONS_FOUND = "No matching contractors found.";
+    public static final String MESSAGE_SUCCESS = "Found %d matching contractor(s).";
 
     private final Predicate<Person> predicate;
 
@@ -36,8 +39,24 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+        List<Person> filteredPersons = model.getFilteredPersonList();
+        if (filteredPersons.isEmpty()) {
+            return new CommandResult(MESSAGE_NO_PERSONS_FOUND);
+        }
+
+        StringBuilder personsOutput = new StringBuilder();
+        for (int i = 0; i < filteredPersons.size(); i++) {
+            personsOutput.append(i + 1)
+                    .append(". ")
+                    .append(Messages.format(filteredPersons.get(i)));
+            if (i < filteredPersons.size() - 1) {
+                personsOutput.append("\n");
+            }
+        }
+
+        String feedback = String.format(MESSAGE_SUCCESS, filteredPersons.size()) + "\n"
+                + personsOutput;
+        return new CommandResult(feedback);
     }
 
     @Override

@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -19,6 +18,7 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -61,7 +61,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = FindCommand.MESSAGE_NO_PERSONS_FOUND;
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -71,21 +71,31 @@ public class FindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
+        String expectedMessage = String.format(FindCommand.MESSAGE_SUCCESS, 3) + "\n"
+                + "1. " + Messages.format(CARL) + "\n"
+                + "2. " + Messages.format(ELLE) + "\n"
+                + "3. " + Messages.format(FIONA);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
     }
 
     @Test
     public void execute_serviceKeyword_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
         //PersonBuilder default service is Plumber
         ServiceContainsKeywordsPredicate predicate = new ServiceContainsKeywordsPredicate(Arrays.asList("Plumber"));
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
+        String expectedMessage = String.format(FindCommand.MESSAGE_SUCCESS, 7) + "\n"
+                + "1. " + Messages.format(ALICE) + "\n"
+                + "2. " + Messages.format(BENSON) + "\n"
+                + "3. " + Messages.format(CARL) + "\n"
+                + "4. " + Messages.format(DANIEL) + "\n"
+                + "5. " + Messages.format(ELLE) + "\n"
+                + "6. " + Messages.format(FIONA) + "\n"
+                + "7. " + Messages.format(GEORGE);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE), model.getFilteredPersonList());
     }
