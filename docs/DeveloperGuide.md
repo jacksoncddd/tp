@@ -509,7 +509,7 @@ testers are expected to do more *exploratory* testing.
 1. **View Facility Task**
     1. Test case: `history f/Sports Hall`
     1. Expected: List showing all the maintenance history on the specific facility.
-    1. Test case: `history f/Gym` (on facility)
+    1. Test case: `history f/Gym` (no facility)
     1. Expected: Error saying no maintenance history found message.
 
 1. **Generating a report**
