@@ -6,7 +6,7 @@
 
 # EstateContacts User Guide
 
-EstateContacts is a **desktop address book app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EstateContacts can get your contact management tasks done faster than traditional GUI apps.
+EstateContacts is a **desktop address book app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EstateContacts can get your contact management tasks done faster than traditional GUI apps.
 
 ---
 Table of Contents
@@ -23,7 +23,7 @@ Table of Contents
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F13-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for EstateContacts.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -64,7 +64,7 @@ Table of Contents
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `listc`, `listt`, `sortt`, `exit`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -80,18 +80,19 @@ Adds a contractor to EstateContacts.
 
 Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…`
 
-* Emails should be of the format local-part@domain
-* The local-part should only contain alphanumeric characters and (+ _ . -) excluding the paranthesis
-* The local-part may not start or end with any special characters
-* The local-part should be followed by a '@' and then a domain
-* The domain is made up of domain labels separated by periods
-* The domain must end with a domain label at least 2 characters long
-* Each domain label must start and end with alphanumeric characters
-* Each domain label must consist of alphanumeric characters separated only by hyphens (if any)
+Contractor field constraints:
+* `NAME`: Must contain only alphanumeric characters and spaces, and must not be blank.
+* `PHONE_NUMBER`: Must contain only digits, with length between 3 and 15 digits.
+* `EMAIL`: Must be in the format `local-part@domain`.
+* `EMAIL` local-part: Must use alphanumeric characters and `+_.-`, cannot start/end with a special character.
+* `EMAIL` domain: Domain labels are separated by `.`; each label must start/end alphanumeric, may contain internal hyphens, and final label must be at least 2 characters.
+* `ADDRESS`: Can contain any characters, but must not be blank.
+* `SERVICE`: Must be alphanumeric (no spaces/special characters).
+* `TAG`: Must be alphanumeric (no spaces/special characters).
 
 <box type="tip" seamless>
 
-**Tip:** A contractor can have any number of tags (including 0)
+**Tip:** A contractor can have any number of tags (including 0).
 </box>
 
 Examples:
@@ -116,7 +117,7 @@ Format: `findc n/KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
 * Contractors matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
-Caution:
+**Caution:**
 * `findc` returns the filtered list, so it will affect other commands that uses contractor index.
 * If you used `findc` as the most recent command, use `findc` contractor index instead of `listc` contractor index.
  
@@ -140,6 +141,7 @@ Format: `delc INDEX`
 
 **Caution:** Deleting a contractor will **not** delete their associated maintenance tasks. Any tasks previously assigned to the deleted contractor will still appear in the task list, but the contractor will be shown as `Unknown (deleted)`. It is recommended to delete associated tasks via `delt` before deleting a contractor.
 
+
 </box>
 
 Examples:
@@ -156,6 +158,10 @@ Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG
 * At least one field must be provided.
 * The index refers to the index number shown in the displayed contractor list.
 * The index **must be a positive integer** 1, 2, 3
+* Any edited contractor field must satisfy the same field constraints listed under `addc`.
+
+**Caution:** 
+* Inputting `t/` will clear all exisiting tags of the contractor.
 
 Example:
 * `editc 1 p/91234567 e/johndoe@example.com`
@@ -170,11 +176,10 @@ Adds a maintenance task and assigns it to a contractor in EstateContacts.
 
 Format: `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`
 
-* `FACILITY` must be between 1 and 50 characters.
-* `DATE` must be in `YYYY-MM-DD` format and must not be in the past.
-* `CONTRACTOR_INDEX` refers to the index number shown in the **currently displayed contractor list**.
-* The index **must be a positive integer** 1, 2, 3
-* The date must be in YYYY-MM-DD format.
+Task field constraints:
+* `FACILITY`: Must be between 1 and 50 characters (after trimming).
+* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and must not be in the past.
+* `CONTRACTOR_INDEX`: Must be a positive integer and must refer to an entry in the **currently displayed contractor list**.
 
 <box type="warning" seamless>
 
@@ -204,11 +209,11 @@ Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 
 * Existing values will be overwritten by the input values.
 * At least one field must be provided.
-* The index refers to the index number shown in the displayed maintenance tasklist.
+* The index refers to the index number shown in the displayed maintenance task list.
 * The index **must be a positive integer** 1, 2, 3
-* The date must be in YYYY-MM-DD format.
+* Any edited task field must satisfy the same field constraints listed under `addt`.
 
-Caution: Refer to `addt` caution section.
+**Caution:**: Refer to `addt` caution section.
 
 Examples:
 * `editt 1 f/FunctionRoom d/2026-12-15`
@@ -220,7 +225,7 @@ Deletes the specified task from EstateContacts.
 Format: `delt INDEX`
 
 * Deletes the task at the specified `INDEX`.
-* The index refers to the index number shown in the displayed maintenance tasklist.
+* The index refers to the index number shown in the displayed maintenance task list.
 * Completed tasks (marked via `donet`) **cannot** be deleted, as they are kept for monthly reporting purposes.
 
 Examples:
@@ -240,9 +245,9 @@ Marks the specified maintenance task as completed.
 Format: `donet INDEX`
 
 * Marks the task at the specified `INDEX` as done.
-* The index refers to the index number shown in the displayed maintenance tasklist.
+* The index refers to the index number shown in the displayed maintenance task list.
 * The index **must be a positive integer** 1, 2, 3, …​
-* A task that has already been marked as done cannot be marked again.
+* Running `donet` on a completed task will revert it to pending.
 
 Examples:
 * `listt` followed by `donet 1` marks the 1st task in the task list as completed.
@@ -312,8 +317,8 @@ EstateContacts data are saved automatically as a JSON file `[JAR file location]/
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, EstateContacts will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause EstateContacts to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 
@@ -322,7 +327,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous EstateContacts home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -344,7 +349,7 @@ Action          | Format, Examples
 **Find Contractor(s)** | `findc n/KEYWORD [MORE_KEYWORDS]` or `findc s/KEYWORD [MORE_KEYWORDS]`<br> e.g., `findc n/James Jake`
 **Add Task**    | `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`<br> e.g., `addt f/Sports Hall d/2026-12-01 c/2`
 **List Tasks**  | `listt`
-**Edit Task**  | `editt INDEX [f/FACILITY] [d/DATE)] [c/CONTRACTOR_INDEX]` <br> e.g., `editt 1 f/FunctionRoom d/2026-12-15`
+**Edit Task**  | `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]` <br> e.g., `editt 1 f/FunctionRoom d/2026-12-15`
 **Delete Task** | `delt INDEX`<br> e.g., `delt 1`
 **Done Task**   | `donet INDEX`<br> e.g., `donet 1`
 **Sort Tasks**  | `sortt`
