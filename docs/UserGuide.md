@@ -80,6 +80,15 @@ Adds a contractor to EstateContacts.
 
 Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…`
 
+* Emails should be of the format local-part@domain
+* The local-part should only contain alphanumeric characters and (+ _ . -) excluding the paranthesis
+* The local-part may not start or end with any special characters
+* The local-part should be followed by a '@' and then a domain
+* The domain is made up of domain labels separated by periods
+* The domain must end with a domain label at least 2 characters long
+* Each domain label must start and end with alphanumeric characters
+* Each domain label must consist of alphanumeric characters separated only by hyphens (if any)
+
 <box type="tip" seamless>
 
 **Tip:** A contractor can have any number of tags (including 0)
