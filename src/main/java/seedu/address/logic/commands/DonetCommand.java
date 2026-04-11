@@ -57,7 +57,8 @@ public class DonetCommand extends Command {
         MaintenanceTask taskToComplete = taskList.get(targetIndex.getZeroBased());
 
         if (taskToComplete.isCompleted()) {
-            throw new CommandException(MESSAGE_ALREADY_COMPLETED);
+            taskToComplete.unmarkAsCompleted();
+            return new CommandResult("Task reverted to pending: " + taskToComplete.getFacility());
         }
 
         taskToComplete.markAsCompleted();

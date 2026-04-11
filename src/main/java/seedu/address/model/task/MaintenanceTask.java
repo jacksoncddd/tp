@@ -122,6 +122,14 @@ public class MaintenanceTask {
     }
 
     /**
+     * Unmarks this maintenance task as completed.
+     */
+    public void unmarkAsCompleted() {
+        assert isCompleted : "Task should already be completed before unmarking";
+        this.isCompleted = false;
+    }
+
+    /**
      * Returns the hash code of this maintenance task based on its identity fields.
      */
     @Override
