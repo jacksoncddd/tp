@@ -159,12 +159,13 @@ Example:
 
 Adds a maintenance task and assigns it to a contractor in EstateContacts.
 
-Format: `addt f/FACILITY d/DATE (YYYY-MM-DD) c/CONTRACTOR_INDEX`
+Format: `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`
 
 * `FACILITY` must be between 1 and 50 characters.
 * `DATE` must be in `YYYY-MM-DD` format and must not be in the past.
 * `CONTRACTOR_INDEX` refers to the index number shown in the **currently displayed contractor list**.
 * The index **must be a positive integer** 1, 2, 3
+* The date must be in YYYY-MM-DD format.
 
 <box type="warning" seamless>
 
@@ -190,12 +191,13 @@ Format: `listt`
 
 Edits the specified task from EstateContacts.
 
-Format: `editt INDEX [f/FACILITY] [d/DATE (YYYY-MM-DD)] [c/CONTRACTOR_INDEX]`
+Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 
 * Existing values will be overwritten by the input values.
 * At least one field must be provided.
 * The index refers to the index number shown in the displayed maintenance tasklist.
 * The index **must be a positive integer** 1, 2, 3
+* The date must be in YYYY-MM-DD format.
 
 Caution: Refer to `addt` caution section.
 
