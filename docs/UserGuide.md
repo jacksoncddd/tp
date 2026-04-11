@@ -38,7 +38,7 @@ Table of Contents
 
    * `delc 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts and tasks.
+   * `clear confirm` : Deletes all contacts and tasks.
 
    * `exit` : Exits the app.
 
@@ -64,7 +64,7 @@ Table of Contents
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -275,11 +275,11 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-### Clearing all entries : `clear`
+### Clearing all entries : `clear confirm`
 
 Clears all contractor entries and maintenance tasks from EstateContacts.
 
-Format: `clear`
+Format: `clear confirm`
 
 ### Exiting the program : `exit`
 
