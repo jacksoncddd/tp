@@ -125,8 +125,9 @@ Format: `findc n/KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `findc n/John` returns `john` and `John Doe`
-* `findc n/amy bob` returns `Amy Lee`, `Bob Tan`<br>
-  ![result for 'find amy bob'](images/findAmyBobResult.png)
+* `findc n/amy bob` returns `Amy Lee`, `Bob Tan`
+* `findc s/Air` returns contractors with service `Air`
+  ![result for 'find amy bob'](images/findByService.png)
 
 ### Deleting a contractor : `delc`
 
