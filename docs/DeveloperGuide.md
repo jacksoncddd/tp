@@ -623,9 +623,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The task is already marked as done.
 
-    * 3a1. EstateContacts informs the user that the selected task is already in `DONE` status.
+    * 3a1. EstateContacts sets the task status back to `pending`.
 
-  Use case ends.
+  Use case resumes at step 4.
 
 
 **Use case: View maintenance history by facility**
@@ -774,8 +774,8 @@ testers are expected to do more *exploratory* testing.
 1. **View Facility Task**
     1. Test case: `history f/Sports Hall`
     1. Expected: List showing all the maintenance history on the specific facility.
-    1. Test case: `history f/Gym` (no facility)
-    1. Expected: Error saying no maintenance history found message.
+    1. Test case: `history f/Gym` (no matching facility)
+    1. Expected: Message saying no maintenance history found for that facility.
 
 1. **Generating a report**
     1. Prerequisites: Add tasks, mark some as complete.
@@ -793,7 +793,7 @@ testers are expected to do more *exploratory* testing.
 1. **Corrupted data file**
     1. Open `data/addressbook.json` and `data/tasklist.json` and add invalid text.
     1. Restart the app.
-    1. Expected: App starts with an empty data file.
+    1. Expected: App starts with empty data files.
 
 ## **Appendix: Planned Enhancements**
 
