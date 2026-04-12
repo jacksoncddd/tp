@@ -9,7 +9,6 @@
 EstateContacts is a **desktop address book app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, EstateContacts can get your contact management tasks done faster than traditional GUI apps.
 
 ---
-Table of Contents
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -90,6 +89,17 @@ Contractor field constraints:
 * `SERVICE`: Must contain alphanumeric words separated by single spaces (no special characters).
 * `TAG`: Must be alphanumeric (no spaces/special characters).
 
+<box type="warning" seamless>
+
+**Duplicate contractor rule:** A contractor is treated as a duplicate if at least one of the following matches an existing contractor:
+* Exact `NAME` match (character-for-character).
+* Exact `PHONE_NUMBER` match.
+* Exact `EMAIL` match.
+
+**Limitation:** `NAME` matching is case-sensitive and spacing-sensitive. For example, `John Doe`, `john doe`, and `John  Doe` are treated as different names.
+
+</box>
+
 <box type="tip" seamless>
 
 **Tip:** A contractor can have any number of tags (including 0).
@@ -125,8 +135,9 @@ Format: `findc n/KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `findc n/John` returns `john` and `John Doe`
-* `findc n/amy bob` returns `Amy Lee`, `Bob Tan`<br>
-  ![result for 'find amy bob'](images/findAmyBobResult.png)
+* `findc n/amy bob` returns `Amy Lee`, `Bob Tan`
+* `findc s/Air` returns contractors with service `Air`
+  ![result for 'find amy bob'](images/findByService.png)
 
 ### Deleting a contractor : `delc`
 
@@ -140,7 +151,8 @@ Format: `delc INDEX`
 
 <box type="warning" seamless>
 
-**Caution:** Deleting a contractor will **not** delete their associated maintenance tasks. Any tasks previously assigned to the deleted contractor will still appear in the task list, but the contractor will be shown as `Unknown (deleted)`. It is recommended to delete associated tasks via `delt` before deleting a contractor.
+**Caution:** Deleting a contractor will **not** delete their associated maintenance tasks. Any tasks previously assigned to the deleted contractor will still appear in the task list with the contractor's details preserved at the time the task was created. It is recommended to delete associated pending tasks via `delt` before deleting a contractor.
+* After `delc INDEX`, contractors below that index shift up by 1. Example: deleting index 2 makes old index 3 become new index 2.
 
 
 </box>
@@ -163,6 +175,7 @@ Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG
 
 **Caution:** 
 * Inputting `t/` will clear all exisiting tags of the contractor.
+* The duplicate contractor rule from `addc` also applies to edits. You cannot edit a contractor to a `NAME`, `PHONE_NUMBER`, or `EMAIL` that duplicates another existing contractor.
 
 Example:
 * `editc 1 p/91234567 e/johndoe@example.com`
@@ -181,11 +194,6 @@ Task field constraints:
 * `FACILITY`: Must be between 1 and 50 characters (after trimming).
 * `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and must not be in the past.
 * `CONTRACTOR_INDEX`: Must be a positive integer and must refer to an entry in the **currently displayed contractor list**.
-
-<box type="warning" seamless>
-
-**Caution:** Always run `listc` before using `addt` to ensure the contractor index refers to the full list. If you run `findc` first and then use `addt`, the index will be based on the filtered list which may assign the task to the wrong contractor.
-</box>
 
 <box type="tip" seamless>
 
@@ -284,13 +292,14 @@ Examples:
 
 ---
 
-### Viewing help : `help or f1 keyboard shortcut`
+### Viewing help : `help or F1 keyboard shortcut`
 
 Shows a message explaining how to access the help page.
 
-![help message](images/helpCommand.png)
-
 Format: `help`
+
+<img src="images/helpCommand.png" width="400" height="511" />
+
 
 ### Clearing all entries : `clear confirm`
 
@@ -357,5 +366,5 @@ Action          | Format, Examples
 **History**     | `history f/FACILITY_NAME`<br> e.g., `history f/Sports Hall`
 **Report**      | `report m/YEAR-MONTH`<br> e.g., `report m/2026-12`
 **Clear**       | `clear confirm`
-**Help**        | `help or f1 keyboard shortcut`
+**Help**        | `help or F1 keyboard shortcut`
 **Exit**        | `exit`

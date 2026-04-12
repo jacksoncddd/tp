@@ -24,6 +24,9 @@ public class DeltCommandParser implements Parser<DeltCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new DeltCommand(index);
         } catch (ParseException pe) {
+            if (pe.getMessage().equals(ParserUtil.MESSAGE_INVALID_INDEX)) {
+                throw pe;
+            }
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeltCommand.MESSAGE_USAGE), pe);
         }

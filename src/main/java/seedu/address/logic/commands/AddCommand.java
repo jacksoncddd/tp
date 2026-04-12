@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SERVICE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.List;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -39,6 +41,8 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New contractor added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This contractor already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PHONE = "Another contractor already uses this phone number";
+    public static final String MESSAGE_DUPLICATE_EMAIL = "Another contractor already uses this email";
 
     private final Person toAdd;
 
@@ -56,6 +60,14 @@ public class AddCommand extends Command {
 
         if (model.hasPerson(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
+        List<Person> allPersons = model.getAddressBook().getPersonList();
+        if (allPersons.stream().anyMatch(person -> person.getPhone().equals(toAdd.getPhone()))) {
+            throw new CommandException(MESSAGE_DUPLICATE_PHONE);
+        }
+        if (allPersons.stream().anyMatch(person -> person.getEmail().equals(toAdd.getEmail()))) {
+            throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
         }
 
         model.addPerson(toAdd);

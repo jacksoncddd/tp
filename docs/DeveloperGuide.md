@@ -368,14 +368,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. EstateContacts prompts for the contact details.
 3. User provides the contractor's details.
 4. EstateContacts adds the contact to the system.
-
+   
    Use case ends.
+
+**Current duplicate contractor rule**
+* A contractor is considered a duplicate if any one of these matches an existing contractor exactly: `NAME`, `PHONE_NUMBER`, or `EMAIL`.
+* `NAME` matching is case-sensitive and spacing-sensitive.
+* `ADDRESS`, `SERVICE`, and `TAG` are not used for duplicate detection.
 
 **Extensions**
 
 * 3a. The provided contact details are invalid.
 
     * 3a1. EstateContacts identifies the invalid field(s) and displays the expected format.
+
+  Use case resumes at step 2.
+
+* 3b. The provided contact is a duplicate based on the duplicate contractor rule.
+
+    * 3b1. EstateContacts shows a duplicate contractor error.
 
   Use case resumes at step 2.
 
@@ -727,7 +738,7 @@ testers are expected to do more *exploratory* testing.
 1. **Deleting a contractor**
     1. Prerequisites: Run `listc` to see all contractors.
     1. Test case: `delc 1`
-    1. Expected: First contractor deleted. Associated tasks show `Unknown (deleted)`.
+    1. Expected: First contractor deleted. Associated tasks preserve the contractor's details at the time of task creation.
     1. Test case: `delc 0`
     1. Expected: Error message shown. No contractor deleted.
 
@@ -749,13 +760,16 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `donet 1`
     1. Expected: Task marked as `[DONE]`.
     1. Test case: `donet 1` again
-    1. Expected: Error saying task already completed.
+    1. Expected: Task reverted back to `[PENDING]`.
 
 1. **Deleting a task**
-    1. Test case: `delt 1` on a `[PENDING]` task
-    1. Expected: Task deleted successfully.
-    1. Test case: `delt 1` on a `[DONE]` task
+    1. Prerequisites: Run `listt` to view all tasks. Identify a `[PENDING]` task and a `[DONE]` task and note their indices.
+    1. Test case: `delt [INDEX]` where `[INDEX]` is the index of a `[PENDING]` task.
+    1. Expected: Task deleted successfully with details shown.
+    1. Test case: `delt [INDEX]` where `[INDEX]` is the index of a `[DONE]` task.
     1. Expected: Error saying completed tasks cannot be deleted.
+    1. Test case: `delt 0`
+    1. Expected: Error message shown. No task deleted.
 
 1. **View Facility Task**
     1. Test case: `history f/Sports Hall`
@@ -780,3 +794,14 @@ testers are expected to do more *exploratory* testing.
     1. Open `data/addressbook.json` and add invalid text.
     1. Restart the app.
     1. Expected: App starts with an empty data file.
+
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+1. **Normalize internal whitespace for contractor-name duplicate checks**
+   Current behavior treats `John Doe` and `John  Doe` as different names. We plan to normalize consecutive spaces to a single space before duplicate detection so these are treated as the same contractor.
+2. **Use case-insensitive contractor-name duplicate checks**
+   Current behavior treats `John Doe`, `john doe`, and `JOHN DOE` as different names. We plan to compare contractor names case-insensitively during duplicate detection.
+3. **Allow same-name contractors when other identity fields differ**
+   Current behavior blocks adding a second contractor when the exact same name already exists, even if phone/email are different. We plan to revise contractor identity so valid same-name contractors can coexist when their contact details differ.

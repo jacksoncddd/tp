@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACILITY;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -34,7 +33,7 @@ public class AddtCommand extends Command {
             + PREFIX_CONTRACTOR_INDEX + "CONTRACTOR_INDEX\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FACILITY + "Sports Hall "
-            + PREFIX_DATE + "2025-12-01 "
+            + PREFIX_DATE + "2026-12-01 "
             + PREFIX_CONTRACTOR_INDEX + "2";
 
     public static final String MESSAGE_SUCCESS = "Task added successfully: %1$s";
@@ -68,8 +67,7 @@ public class AddtCommand extends Command {
         validateContractorExists(model);
         validateNoDuplicate(model);
 
-        List<Person> allPersons = model.getAddressBook().getPersonList();
-        Person contractor = model.getFilteredPersonList().get(contractorIndex.getZeroBased());
+        Person contractor = model.getAddressBook().getPersonList().get(contractorIndex.getZeroBased());
         Set<Tag> contractorTags = contractor.getTags();
         Service contractorService = contractor.getService();
 
@@ -95,7 +93,7 @@ public class AddtCommand extends Command {
      * @throws CommandException If the index is out of bounds.
      */
     private void validateContractorExists(Model model) throws CommandException {
-        int listSize = model.getFilteredPersonList().size();
+        int listSize = model.getAddressBook().getPersonList().size();
         if (contractorIndex.getZeroBased() >= listSize) {
             throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
         }

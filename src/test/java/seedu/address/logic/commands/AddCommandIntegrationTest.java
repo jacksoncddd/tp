@@ -45,4 +45,30 @@ public class AddCommandIntegrationTest {
                 AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
+    @Test
+    public void execute_duplicatePhone_throwsCommandException() {
+        Person personInList = model.getAddressBook().getPersonList().get(0);
+        Person duplicatePhonePerson = new PersonBuilder()
+                .withName("Unique Name Phone")
+                .withPhone(personInList.getPhone().value)
+                .withEmail("uniquephone@example.com")
+                .build();
+
+        assertCommandFailure(new AddCommand(duplicatePhonePerson), model,
+                AddCommand.MESSAGE_DUPLICATE_PHONE);
+    }
+
+    @Test
+    public void execute_duplicateEmail_throwsCommandException() {
+        Person personInList = model.getAddressBook().getPersonList().get(0);
+        Person duplicateEmailPerson = new PersonBuilder()
+                .withName("Unique Name Email")
+                .withPhone("81912345")
+                .withEmail(personInList.getEmail().value)
+                .build();
+
+        assertCommandFailure(new AddCommand(duplicateEmailPerson), model,
+                AddCommand.MESSAGE_DUPLICATE_EMAIL);
+    }
+
 }

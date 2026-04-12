@@ -10,7 +10,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
 import seedu.address.model.task.MaintenanceTask;
 
 /**
@@ -47,7 +46,7 @@ public class DonetCommand extends Command {
         requireNonNull(model);
         assert model != null : "Model should not be null";
 
-        List<MaintenanceTask> taskList = model.getFilteredMaintenanceTaskList();
+        List<MaintenanceTask> taskList = model.getMaintenanceTaskList().getTasks();
 
         if (targetIndex.getZeroBased() >= taskList.size()) {
             logger.warning("Invalid task index: " + targetIndex.getOneBased());
@@ -65,7 +64,6 @@ public class DonetCommand extends Command {
         logger.info("Task marked as completed: " + taskToComplete.getFacility());
 
         // Build display string
-        List<Person> allPersons = model.getAddressBook().getPersonList();
         String contractorNameStr = taskToComplete.getContractorName() != null
             ? taskToComplete.getContractorName().fullName : "Unknown (deleted)";
         String tagsString = taskToComplete.getTags().stream()

@@ -35,7 +35,7 @@ public class DeltCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<MaintenanceTask> lastShownList = model.getFilteredMaintenanceTaskList();
+        List<MaintenanceTask> lastShownList = model.getMaintenanceTaskList().getTasks();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_INDEX);
