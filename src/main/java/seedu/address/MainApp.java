@@ -23,6 +23,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.task.MaintenanceTaskList;
 import seedu.address.model.util.SampleContractorDataUtil;
+import seedu.address.model.util.SampleTaskDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonTaskListStorage;
@@ -103,7 +104,8 @@ public class MainApp extends Application {
 
     /**
      * Loads the saved {@link MaintenanceTaskList} from storage into the given model.
-     * If the file is not found or fails to load, the model starts with an empty task list.
+     * If the file is not found, sample task data is used instead.
+     * If loading fails, the model starts with an empty task list.
      *
      * @param storage      The storage component to read from.
      * @param modelManager The model to populate with loaded tasks.
@@ -111,9 +113,12 @@ public class MainApp extends Application {
     private void loadTaskList(Storage storage, ModelManager modelManager) {
         try {
             Optional<MaintenanceTaskList> taskListOptional = storage.readTaskList();
-            taskListOptional.ifPresent(loaded -> {
-                loaded.getTasks().forEach(modelManager.getMaintenanceTaskList()::addTask);
-            });
+            if (!taskListOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getTaskListFilePath()
+                        + " populated with a sample task list.");
+            }
+            MaintenanceTaskList initialTaskList = taskListOptional.orElseGet(SampleTaskDataUtil::getSampleTaskList);
+            initialTaskList.getTasks().forEach(modelManager.getMaintenanceTaskList()::addTask);
         } catch (DataLoadingException e) {
             logger.warning("Task list data could not be loaded. Starting with an empty task list.");
         }
