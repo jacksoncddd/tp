@@ -30,11 +30,11 @@ public class MaintenanceTask {
     /**
      * Constructs a {@code MaintenanceTask}.
      *
-     * @param facility        The name of the facility (1–50 chars).
-     * @param date            The scheduled date (must not be in the past).
-     * @param contractorName  The name of the contractor responsible for the task.
-     * @param tags            The set of tags associated with the task.
-     * @param service         The service provided by the contractor for this task.
+     * @param facility       The name of the facility (1–50 chars).
+     * @param date           The scheduled date.
+     * @param contractorName The name of the contractor responsible for the task.
+     * @param tags           The set of tags associated with the task.
+     * @param service        The service provided by the contractor for this task.
      */
     public MaintenanceTask(String facility, LocalDate date, Name contractorName, Set<Tag> tags, Service service) {
         assert facility != null : "Facility should not be null";

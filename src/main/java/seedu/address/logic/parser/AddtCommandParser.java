@@ -85,17 +85,13 @@ public class AddtCommandParser implements Parser<AddtCommand> {
      * Parses and validates the date string from the argument map.
      *
      * @param argMultimap The tokenized argument map.
-     * @return A {@code LocalDate} that is today or in the future.
-     * @throws ParseException If the date format is invalid or the date is in the past.
+     * @return A {@code LocalDate}.
+     * @throws ParseException If the date format is invalid.
      */
     private LocalDate parseDate(ArgumentMultimap argMultimap) throws ParseException {
         String dateStr = argMultimap.getValue(PREFIX_DATE).get().trim();
         try {
-            LocalDate date = LocalDate.parse(dateStr);
-            if (date.isBefore(LocalDate.now())) {
-                throw new ParseException("Date must not be in the past.");
-            }
-            return date;
+            return LocalDate.parse(dateStr);
         } catch (DateTimeParseException e) {
             throw new ParseException("Date must be in YYYY-MM-DD format and be a valid date.");
         }
