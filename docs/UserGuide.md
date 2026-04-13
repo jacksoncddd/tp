@@ -111,6 +111,8 @@ Examples:
 
 <img src="images/addc.png" width="80%" />
 
+---
+
 ### Listing all contractors : `listc`
 
 Shows a list of all contractors in EstateContacts.
@@ -118,6 +120,8 @@ Shows a list of all contractors in EstateContacts.
 Format: `listc`
 
 <img src="images/listc.png" width="80%" />
+
+---
 
 ### Locating contractors by name or service : `findc`
 
@@ -150,6 +154,8 @@ Examples:
 
 <img src="images/findc.png" width="80%" />
 
+---
+
 ### Deleting a contractor : `delc`
 
 Deletes the specified contractor from EstateContacts.
@@ -171,6 +177,8 @@ Examples:
 * `findc n/Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
 
 <img src="images/delc.png" width="80%" />
+
+---
 
 ### Editing a contractor : `editc`
 
@@ -196,6 +204,8 @@ Examples:
 * `editc 1 p/91234567 e/johndoe@example.com`
 
 <img src="images/editc.png" width="80%" />
+
+---
 
 ### Maintenance task features
 
@@ -229,6 +239,8 @@ Examples:
 
 <img src="images/addt.png" width="80%" />
 
+---
+
 ### Listing all tasks : `listt`
 
 Shows a list of all tasks in EstateContacts.
@@ -236,6 +248,8 @@ Shows a list of all tasks in EstateContacts.
 Format: `listt`
 
 <img src="images/listt.png" width="80%" />
+
+---
 
 ### Editing a task : `editt`
 
@@ -270,6 +284,8 @@ Examples:
 
 <img src="images/editt.png" width="80%" />
 
+---
+
 ### Deleting a task : `delt`
 
 Deletes the specified task from EstateContacts.
@@ -290,6 +306,7 @@ Examples:
 
 <img src="images/delt.png" width="80%" />
 
+---
 
 ### Sorting tasks by date : `sortt`
 
@@ -298,6 +315,8 @@ Sorts the maintenance task list by date (ascending).
 Format: `sortt`
 
 <img src="images/sortt.png" width="80%" />
+
+---
 
 ### Marking a task as complete : `donet`
 
@@ -312,6 +331,8 @@ Examples:
 * `listt` followed by `donet 1` marks the 1st task as completed. Running `donet 1` again reverts it to pending.
 
 <img src="images/donet.png" width="80%" />
+
+---
 
 ### Viewing maintenance history for a facility : `history`
 
@@ -328,6 +349,8 @@ Examples:
 * `history f/Function Room` displays the maintenance history for the "Function Room".
 
 <img src="images/history.png" width="80%" />
+
+---
 
 ### Generating a monthly report : `report`
 
@@ -348,6 +371,8 @@ Examples:
 
 <img src="images/report.png" width="80%" />
 
+---
+
 ### General features
 
 ---
@@ -358,14 +383,15 @@ Shows a message explaining how to access the help page. You can also press the `
 
 Format: `help`
 
-<img src="images/help.png" width="400" height="511" />
-
 <box type="warning" seamless>
 
 **Caution:** If the Help Window has been minimised and `help` is run (or `F1` is pressed), the original Help Window will remain minimised and no new window will appear. Manually restore the minimised Help Window to view it.
 
 </box>
 
+<img src="images/help.png" width="400" height="511" />
+
+---
 
 ### Clearing all entries : `clear confirm`
 
@@ -381,6 +407,7 @@ Format: `clear confirm`
 
 <img src="images/clearConfirm.png" width="80%" />
 
+---
 
 ### Exiting the program : `exit`
 

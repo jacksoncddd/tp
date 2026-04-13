@@ -148,7 +148,7 @@ The `Model` component,
 
 The following class diagram shows how the `MaintenanceTask` feature is integrated into the Model component:
 
-<puml src="diagrams/MaintenanceTaskClassDiagram.puml" width="450" height = 1000/>
+<puml src="diagrams/MaintenanceTaskClassDiagram.puml" width="450" height = "700"/>
 
 The `MaintenanceTaskList` component,
 * stores all `MaintenanceTask` objects added by the user.
