@@ -18,7 +18,7 @@ Class I #FFFFFF
 
 ModelManager .up.|> Model
 ModelManager *--> "1" MaintenanceTaskList
-MaintenanceTaskList --> "0..* tasks" MaintenanceTask
+MaintenanceTaskList --> "* tasks" MaintenanceTask
 MaintenanceTask *--> "*" Tag
 MaintenanceTask *--> "1" Service
 Person *--> "*" Tag
