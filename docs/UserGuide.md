@@ -106,7 +106,7 @@ Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…`
 
 Examples:
 * `addc n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/Plumbing`
-* `addc n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 s/Electrical t/criminal`
+* `addc n/Betsy Crowe e/betsycrowe@example.com a/Kent Ridge p/99347164 s/Electrical t/24H t/friend`
 * `addc n/AirCool Pte Ltd p/91234567 e/contact@aircool.com a/10 Industrial Road s/Air Con Servicing t/24H`
 
 <img src="images/addc.png" width="80%" />
