@@ -329,11 +329,17 @@ Examples:
 
 ### Viewing help : `help or F1 keyboard shortcut`
 
-Shows a message explaining how to access the help page.
+Shows a message explaining how to access the help page. You can also press the `F1` key as a shortcut to open the help window.
 
 Format: `help`
 
 <img src="images/helpCommand.png" width="400" height="511" />
+
+<box type="warning" seamless>
+
+**Caution:** If the Help Window has been minimised and `help` is run (or `F1` is pressed), the original Help Window will remain minimised and no new window will appear. Manually restore the minimised Help Window to view it.
+
+</box>
 
 
 ### Clearing all entries : `clear confirm`
