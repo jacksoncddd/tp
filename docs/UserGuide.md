@@ -270,6 +270,11 @@ Format: `history f/FACILITY_NAME`
 * Lists all tasks for the specified facility.
 * If no tasks are found, a message will indicate that no maintenance history exists for that facility.
 
+Constraints:
+* The match is case-insensitive. e.g. `history f/sports hall` will match `Sports Hall`.
+* Only exact facility names will be matched. e.g. `history f/Sports` will not match `Sports Hall`.
+* `FACILITY_NAME` cannot be empty.
+
 Examples:
 * `history f/Sports Hall` displays the maintenance history for the "Sports Hall".
 * `history f/Function Room` displays the maintenance history for the "Function Room".
