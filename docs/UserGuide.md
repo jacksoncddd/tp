@@ -250,6 +250,8 @@ Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 
 </box>
 
+**Tip 2 :** You are allowed to edit tasks to dates in the past (e.g., to retroactively fix logs for completed maintenance work).
+
 Examples:
 * `editt 1 f/Function Room d/2026-12-15`
 

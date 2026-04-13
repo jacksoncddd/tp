@@ -57,9 +57,6 @@ public class EdittCommandParser implements Parser<EdittCommand> {
             String dateStr = argMultimap.getValue(PREFIX_DATE).get().trim();
             try {
                 LocalDate date = LocalDate.parse(dateStr);
-                if (date.isBefore(LocalDate.now())) {
-                    throw new ParseException("Date must not be in the past.");
-                }
                 descriptor.setDate(date);
             } catch (DateTimeParseException e) {
                 throw new ParseException("Date must be in YYYY-MM-DD format and be a valid date.");

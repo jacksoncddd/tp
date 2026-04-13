@@ -83,13 +83,6 @@ public class EdittCommandParserTest {
     }
 
     @Test
-    public void parse_pastDate_failure() {
-        LocalDate pastDate = LocalDate.now().minusDays(1);
-        assertParseFailure(parser, "1 " + PREFIX_DATE + pastDate,
-                "Date must not be in the past.");
-    }
-
-    @Test
     public void parse_invalidContractorIndex_failure() {
         assertParseFailure(parser, "1 " + PREFIX_CONTRACTOR_INDEX + "abc",
                 "Contractor index must be a positive integer.");
