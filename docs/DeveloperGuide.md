@@ -761,6 +761,11 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `listt`
     1. Expected: All tasks shown with `[PENDING]` or `[DONE]` status.
 
+1. **Editing a task**
+    1. Prerequisites: Run `listt` to confirm task indices. Ensure task at index 1 is pending.
+    1. Test case: `editt 1 d/2020-01-01` (editing to a past date)
+    1. Expected: Task date updated successfully to the past date without throwing an error.
+
 1. **Marking a task as complete**
     1. Prerequisites: Add a task first.
     1. Test case: `donet 1`
