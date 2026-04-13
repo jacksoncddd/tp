@@ -42,7 +42,7 @@ public class HelpWindow extends UiPart<Stage> {
 
             System commands:
             - help
-            - clear (asks for confirmation)
+            - clear (user to type clear confirm)
             - exit
 
             Full guide:
