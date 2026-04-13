@@ -190,18 +190,24 @@ Adds a maintenance task and assigns it to a contractor in EstateContacts.
 
 Format: `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`
 
-Task field constraints:
-* `FACILITY`: Must be between 1 and 50 characters (after trimming).
-* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and must not be in the past.
-* `CONTRACTOR_INDEX`: Must be a positive integer and must refer to an entry in the **currently displayed contractor list**.
+**Field constraints:**
+* `FACILITY`: Must be between 1 and 50 characters (after trimming leading/trailing spaces).
+* `DATE`: Must be in `YYYY-MM-DD` format and must be a valid calendar date (e.g. `2026-02-30` is invalid).
+* `CONTRACTOR_INDEX`: Must be a positive integer referring to the index shown in the **currently displayed contractor list**.
+
+<box type="warning" seamless>
+
+**Caution:** A task cannot be added if another task for the same facility on the same date already exists.
+
+</box>
 
 <box type="tip" seamless>
 
-**Tip:** A task cannot be added if another task for the same facility on the same date already exists.
+**Tip:** You are allowed to add tasks with dates in the past (e.g. to retroactively log completed maintenance work). The task will be added successfully, but a warning message will be shown indicating that the task is scheduled in the past.
 </box>
 
 Examples:
-* `listc` followed by `addt f/Sports Hall d/2026-12-01 c/2` adds a task for Sports Hall on 1 Dec 2026 assigned to the 2nd contractor in the full list.
+* `listc` followed by `addt f/Sports Hall d/2026-12-01 c/2` adds a task for Sports Hall on 1 Dec 2026 assigned to the 2nd contractor in the displayed list.
 * `listc` followed by `addt f/Function Room d/2026-06-20 c/4` adds a task for Function Room on 20 Jun 2026 assigned to the 4th contractor.
 
 ### Listing all tasks : `listt`
