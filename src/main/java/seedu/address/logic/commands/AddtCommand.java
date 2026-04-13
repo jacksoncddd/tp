@@ -69,7 +69,7 @@ public class AddtCommand extends Command {
         validateContractorExists(model);
         validateNoDuplicate(model);
 
-        Person contractor = model.getAddressBook().getPersonList().get(contractorIndex.getZeroBased());
+        Person contractor = model.getFilteredPersonList().get(contractorIndex.getZeroBased());
         Set<Tag> contractorTags = contractor.getTags();
         Service contractorService = contractor.getService();
 
@@ -101,7 +101,7 @@ public class AddtCommand extends Command {
      * @throws CommandException If the index is out of bounds.
      */
     private void validateContractorExists(Model model) throws CommandException {
-        int listSize = model.getAddressBook().getPersonList().size();
+        int listSize = model.getFilteredPersonList().size();
         if (contractorIndex.getZeroBased() >= listSize) {
             throw new CommandException(MESSAGE_INVALID_CONTRACTOR_INDEX);
         }
