@@ -173,19 +173,23 @@ Examples:
 
 Edits the details of the contractor identified by the index number shown in the displayed contractor list.
 
-Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]...`
+Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]…​`
 
-* Existing values will be overwritten by the input values.
-* At least one field must be provided.
-* The index refers to the index number shown in the displayed contractor list.
-* The index **must be a positive integer** 1, 2, 3
-* Any edited contractor field must satisfy the same field constraints listed under `addc`.
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the currently displayed contractor list.
+* At least one optional field must be provided.
+* All edited fields must satisfy the same field constraints listed under `addc`.
+
+<box type="warning" seamless>
 
 **Caution:**
-* Inputting `t/` will clear all exisiting tags of the contractor.
-* The duplicate contractor rule from `addc` also applies to edits. You cannot edit a contractor to a `NAME`, `PHONE_NUMBER`, or `EMAIL` that duplicates another existing contractor.
+* Providing `t/` without a tag value will clear **all** existing tags of the contractor.
+* The duplicate contractor rule from `addc` also applies to edits — you cannot edit a contractor to a `NAME`, `PHONE_NUMBER`, or `EMAIL` that duplicates another existing contractor.
+* After a successful `editc`, the contractor list resets to show **all** contractors (any active `findc` filter is cleared).
 
-Example:
+</box>
+
+Examples:
 * `editc 1 p/91234567 e/johndoe@example.com`
 
 ### Maintenance task features
