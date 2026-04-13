@@ -216,16 +216,25 @@ Edits the specified task from EstateContacts.
 
 Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 
-* Existing values will be overwritten by the input values.
-* At least one field must be provided.
-* The index refers to the index number shown in the displayed maintenance task list.
-* The index **must be a positive integer** 1, 2, 3
-* Any edited task field must satisfy the same field constraints listed under `addt`.
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the displayed maintenance task list.
+* At least one optional field must be provided.
+* `FACILITY`: Must be between 1 and 50 characters (after trimming leading/trailing spaces).
+* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and **must not be a date in the past**.
+* `CONTRACTOR_INDEX`: Must be a positive integer referring to the index shown in the **currently displayed contractor list**.
 
-**Caution:**: Refer to `addt` caution section.
+<box type="warning" seamless>
+
+**Caution:**
+* Completed tasks (marked via `donet`) **cannot** be edited. Toggle the task back to pending using `donet INDEX` before editing.
+* A task cannot be edited to have the same facility and date as another existing task.
+* Unlike `addt`, past dates are **not** allowed when editing a task's date.
+* Changing the contractor (`c/CONTRACTOR_INDEX`) will update the task's stored contractor name, service, and tags to match the new contractor at the time of the edit. If that contractor is later modified or deleted, the task retains the snapshot taken at edit time.
+
+</box>
 
 Examples:
-* `editt 1 f/FunctionRoom d/2026-12-15`
+* `editt 1 f/Function Room d/2026-12-15`
 
 ### Deleting a task : `delt`
 
