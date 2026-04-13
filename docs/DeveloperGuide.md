@@ -268,6 +268,12 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
     * Cons: We must ensure that the implementation of each individual command are correct.
 
+**Aspect: Behavior of `clear confirm` on maintenance tasks:**
+
+* **Alternative 1 (current choice):** Delete all uncompleted tasks, but preserve completed ones.
+    * Pros: Reporting history remains intact even after a bulk wipe, aligning with the system rule that completed tasks are immutable and kept for audit/reporting.
+    * Cons: Users must manually edit the `tasklist.json` data file if they truly want to wipe a heavily cluttered history of completed tasks.
+
 _{more aspects and alternatives to be added}_
 
 ### Maintenance Task Feature
@@ -368,7 +374,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. EstateContacts prompts for the contact details.
 3. User provides the contractor's details.
 4. EstateContacts adds the contact to the system.
-   
+
    Use case ends.
 
 **Current duplicate contractor rule**

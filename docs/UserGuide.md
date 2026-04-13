@@ -20,15 +20,15 @@ EstateContacts is a **desktop address book app for managing contacts, optimized 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F13-3/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F13-3/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for EstateContacts.
+3. Copy the file to the folder you want to use as the _home folder_ for EstateContacts.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar estatecontacts.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar estatecontacts.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `listc` : Lists all contacts.
@@ -37,11 +37,11 @@ EstateContacts is a **desktop address book app for managing contacts, optimized 
 
    * `delc 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear confirm` : Deletes all contacts and tasks.
+   * `clear confirm` : Deletes all contacts and pending tasks. Completed tasks are preserved for reporting.
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -131,7 +131,7 @@ Format: `findc n/KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
 **Caution:**
 * `findc` returns the filtered list, so it will affect other commands that uses contractor index.
 * If you used `findc` as the most recent command, use `findc` contractor index instead of `listc` contractor index.
- 
+
 
 Examples:
 * `findc n/John` returns `john` and `John Doe`
@@ -173,7 +173,7 @@ Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG
 * The index **must be a positive integer** 1, 2, 3
 * Any edited contractor field must satisfy the same field constraints listed under `addc`.
 
-**Caution:** 
+**Caution:**
 * Inputting `t/` will clear all exisiting tags of the contractor.
 * The duplicate contractor rule from `addc` also applies to edits. You cannot edit a contractor to a `NAME`, `PHONE_NUMBER`, or `EMAIL` that duplicates another existing contractor.
 
@@ -308,7 +308,7 @@ Format: `help`
 
 ### Clearing all entries : `clear confirm`
 
-Permanently clears all contractor entries and maintenance tasks from EstateContacts.
+Permanently clears all contractor entries and pending maintenance tasks from EstateContacts. Completed tasks (`[DONE]`) are preserved for monthly reporting purposes.
 
 Format: `clear confirm`
 
