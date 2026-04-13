@@ -53,6 +53,10 @@ public class MaintenanceTaskList {
         return tasks.size();
     }
 
+    public void clearUncompletedTasks() {
+        tasks.removeIf(task -> !task.isCompleted());
+    }
+
     /**
      * Returns true if a task with the same facility and date already exists in the
      * list.
