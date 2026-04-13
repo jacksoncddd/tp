@@ -281,17 +281,15 @@ Format: `sortt`
 
 ### Marking a task as complete : `donet`
 
-Marks the specified maintenance task as completed.
+Toggles the completion status of the specified maintenance task. Running `donet` on a pending task marks it as completed; running it again on a completed task reverts it to pending.
 
 Format: `donet INDEX`
 
-* Marks the task at the specified `INDEX` as done.
-* The index refers to the index number shown in the displayed maintenance task list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* Running `donet` on a completed task will revert it to pending.
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the displayed maintenance task list.
 
 Examples:
-* `listt` followed by `donet 1` marks the 1st task in the task list as completed.
+* `listt` followed by `donet 1` marks the 1st task as completed. Running `donet 1` again reverts it to pending.
 
 ### Viewing maintenance history for a facility : `history`
 
