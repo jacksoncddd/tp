@@ -25,7 +25,7 @@ EstateContacts is a **desktop address book app for managing contacts, optimized 
 3. Copy the file to the folder you want to use as the _home folder_ for EstateContacts.
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar estatecontacts.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the below should appear in a few seconds. Note how the app contains sample data for contractors and maintenance tasks.<br>
    ![Ui](images/Ui.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -37,7 +37,7 @@ EstateContacts is a **desktop address book app for managing contacts, optimized 
 
    * `delc 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear confirm` : Deletes all contacts and pending tasks. Completed tasks are preserved for reporting.
+   * `listt` : Lists all tasks.
 
    * `exit` : Exits the app.
 
@@ -109,11 +109,15 @@ Examples:
 * `addc n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 s/Electrical t/criminal`
 * `addc n/AirCool Pte Ltd p/91234567 e/contact@aircool.com a/10 Industrial Road s/Air Con Servicing t/24H`
 
+![addc](images/addc.png)
+
 ### Listing all contractors : `listc`
 
 Shows a list of all contractors in EstateContacts.
 
 Format: `listc`
+
+![listc](images/listc.png)
 
 ### Locating contractors by name or service : `findc`
 
@@ -139,12 +143,12 @@ For example, if `listc` shows Rachel Ng at index 5, but `findc n/Rachel` shows h
 
 </box>
 
-
 Examples:
 * `findc n/John` returns `john` and `John Doe`
 * `findc n/amy bob` returns `Amy Lee`, `Bob Tan`
 * `findc s/Air` returns contractors with service `Air`
-  ![result for 'find amy bob'](images/findByService.png)
+
+![find](images/find.png)
 
 ### Deleting a contractor : `delc`
 
@@ -160,12 +164,13 @@ Format: `delc INDEX`
 **Caution:** Deleting a contractor will **not** delete their associated maintenance tasks. Any tasks previously assigned to the deleted contractor will still appear in the task list with the contractor's details preserved at the time the task was created. It is recommended to delete associated pending tasks via `delt` before deleting a contractor.
 * After `delc INDEX`, contractors below that index shift up by 1. Example: deleting index 2 makes old index 3 become new index 2.
 
-
 </box>
 
 Examples:
-* `listc` followed by `delc 2` deletes the 2nd contractor in EstateContacts.
+* `listc` followed by `delc 6` deletes the 6th contractor in EstateContacts.
 * `findc n/Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
+
+![delc](images/delc.png)
 
 ### Editing a contractor : `editc`
 
@@ -189,6 +194,8 @@ Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG
 
 Examples:
 * `editc 1 p/91234567 e/johndoe@example.com`
+
+![editc](images/editc.png)
 
 ### Maintenance task features
 
@@ -221,11 +228,15 @@ Examples:
 * `listc` followed by `addt f/Sports Hall d/2026-12-01 c/2` adds a task for Sports Hall on 1 Dec 2026 assigned to the 2nd contractor in the displayed list.
 * `listc` followed by `addt f/Function Room d/2026-06-20 c/4` adds a task for Function Room on 20 Jun 2026 assigned to the 4th contractor.
 
+![addt](images/addt.png)
+
 ### Listing all tasks : `listt`
 
 Shows a list of all tasks in EstateContacts.
 
 Format: `listt`
+
+![listt](images/listt.png)
 
 ### Editing a task : `editt`
 
@@ -237,7 +248,7 @@ Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 * `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the displayed maintenance task list.
 * At least one optional field must be provided.
 * `FACILITY`: Must be between 1 and 50 characters (after trimming leading/trailing spaces).
-* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and **must not be a date in the past**.
+* `DATE`: Must be in `YYYY-MM-DD` format and must be a valid calendar date (e.g. `2026-02-30` is invalid).
 * `CONTRACTOR_INDEX`: Must be a positive integer referring to the index shown in the **currently displayed contractor list**.
 
 <box type="warning" seamless>
@@ -250,10 +261,12 @@ Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 
 </box>
 
-**Tip 2 :** You are allowed to edit tasks to dates in the past (e.g., to retroactively fix logs for completed maintenance work).
+**Tip:** You are allowed to edit tasks to dates in the past (e.g., to retroactively fix logs for completed maintenance work).
 
 Examples:
 * `editt 1 f/Function Room d/2026-12-15`
+
+![editt](images/editt.png)
 
 ### Deleting a task : `delt`
 
@@ -273,12 +286,16 @@ Format: `delt INDEX`
 Examples:
 * `delt 1`
 
+![delt](images/delt.png)
+
+
 ### Sorting tasks by date : `sortt`
 
 Sorts the maintenance task list by date (ascending).
 
 Format: `sortt`
 
+![sortt](images/sortt.png)
 
 ### Marking a task as complete : `donet`
 
@@ -291,6 +308,8 @@ Format: `donet INDEX`
 
 Examples:
 * `listt` followed by `donet 1` marks the 1st task as completed. Running `donet 1` again reverts it to pending.
+
+![donet](images/donet.png)
 
 ### Viewing maintenance history for a facility : `history`
 
@@ -305,6 +324,8 @@ Format: `history f/FACILITY_NAME`
 Examples:
 * `history f/Sports Hall` displays the maintenance history for the "Sports Hall".
 * `history f/Function Room` displays the maintenance history for the "Function Room".
+
+![history](images/history.png)
 
 ### Generating a monthly report : `report`
 
@@ -323,6 +344,8 @@ Examples:
 * `report m/2026-12` generates a report for December 2026.
 * `report m/2026-06` generates a report for June 2026.
 
+![report](images/report.png)
+
 ### General features
 
 ---
@@ -333,7 +356,7 @@ Shows a message explaining how to access the help page. You can also press the `
 
 Format: `help`
 
-<img src="images/helpCommand.png" width="400" height="511" />
+<img src="images/help.png" width="400" height="511" />
 
 <box type="warning" seamless>
 
@@ -354,14 +377,16 @@ Format: `clear confirm`
 
 </box>
 
+![clear confirm](images/clearConfirm.png)
+
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
-
-
+---
 
 ### Saving the data
 
