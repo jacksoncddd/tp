@@ -109,7 +109,7 @@ Examples:
 * `addc n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 s/Electrical t/criminal`
 * `addc n/AirCool Pte Ltd p/91234567 e/contact@aircool.com a/10 Industrial Road s/Air Con Servicing t/24H`
 
-![addc](images/addc.png)
+<img src="images/addc.png" width="80%" />
 
 ### Listing all contractors : `listc`
 
@@ -117,7 +117,7 @@ Shows a list of all contractors in EstateContacts.
 
 Format: `listc`
 
-![listc](images/listc.png)
+<img src="images/listc.png" width="80%" />
 
 ### Locating contractors by name or service : `findc`
 
@@ -148,7 +148,7 @@ Examples:
 * `findc n/amy bob` returns `Amy Lee`, `Bob Tan`
 * `findc s/Air` returns contractors with service `Air`
 
-![find](images/find.png)
+<img src="images/findc.png" width="80%" />
 
 ### Deleting a contractor : `delc`
 
@@ -170,7 +170,7 @@ Examples:
 * `listc` followed by `delc 6` deletes the 6th contractor in EstateContacts.
 * `findc n/Betsy` followed by `delc 1` deletes the 1st contractor in the results of the `findc` command.
 
-![delc](images/delc.png)
+<img src="images/delc.png" width="80%" />
 
 ### Editing a contractor : `editc`
 
@@ -195,7 +195,7 @@ Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG
 Examples:
 * `editc 1 p/91234567 e/johndoe@example.com`
 
-![editc](images/editc.png)
+<img src="images/editc.png" width="80%" />
 
 ### Maintenance task features
 
@@ -227,7 +227,7 @@ Examples:
 * `listc` followed by `addt f/Sports Hall d/2026-12-01 c/2` adds a task for Sports Hall on 1 Dec 2026 assigned to the 2nd contractor in the displayed list.
 * `listc` followed by `addt f/Function Room d/2026-06-20 c/4` adds a task for Function Room on 20 Jun 2026 assigned to the 4th contractor.
 
-![addt](images/addt.png)
+<img src="images/addt.png" width="80%" />
 
 ### Listing all tasks : `listt`
 
@@ -235,7 +235,7 @@ Shows a list of all tasks in EstateContacts.
 
 Format: `listt`
 
-![listt](images/listt.png)
+<img src="images/listt.png" width="80%" />
 
 ### Editing a task : `editt`
 
@@ -268,7 +268,7 @@ Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 Examples:
 * `editt 1 f/Function Room d/2026-12-15`
 
-![editt](images/editt.png)
+<img src="images/editt.png" width="80%" />
 
 ### Deleting a task : `delt`
 
@@ -288,7 +288,7 @@ Format: `delt INDEX`
 Examples:
 * `delt 1`
 
-![delt](images/delt.png)
+<img src="images/delt.png" width="80%" />
 
 
 ### Sorting tasks by date : `sortt`
@@ -297,7 +297,7 @@ Sorts the maintenance task list by date (ascending).
 
 Format: `sortt`
 
-![sortt](images/sortt.png)
+<img src="images/sortt.png" width="80%" />
 
 ### Marking a task as complete : `donet`
 
@@ -311,7 +311,7 @@ Format: `donet INDEX`
 Examples:
 * `listt` followed by `donet 1` marks the 1st task as completed. Running `donet 1` again reverts it to pending.
 
-![donet](images/donet.png)
+<img src="images/donet.png" width="80%" />
 
 ### Viewing maintenance history for a facility : `history`
 
@@ -327,7 +327,7 @@ Examples:
 * `history f/Sports Hall` displays the maintenance history for the "Sports Hall".
 * `history f/Function Room` displays the maintenance history for the "Function Room".
 
-![history](images/history.png)
+<img src="images/history.png" width="80%" />
 
 ### Generating a monthly report : `report`
 
@@ -346,7 +346,7 @@ Examples:
 * `report m/2026-12` generates a report for December 2026.
 * `report m/2026-06` generates a report for June 2026.
 
-![report](images/report.png)
+<img src="images/report.png" width="80%" />
 
 ### General features
 
@@ -379,7 +379,7 @@ Format: `clear confirm`
 
 </box>
 
-![clear confirm](images/clearConfirm.png)
+<img src="images/clearConfirm.png" width="80%" />
 
 
 ### Exiting the program : `exit`
