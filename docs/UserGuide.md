@@ -192,12 +192,14 @@ Format: `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`
 
 Task field constraints:
 * `FACILITY`: Must be between 1 and 50 characters (after trimming).
-* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and must not be in the past.
+* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and must be a valid date in YYYY-MM-DD format.
 * `CONTRACTOR_INDEX`: Must be a positive integer and must refer to an entry in the **currently displayed contractor list**.
+
 
 <box type="tip" seamless>
 
-**Tip:** A task cannot be added if another task for the same facility on the same date already exists.
+**Tip 1 :** A task cannot be added if another task for the same facility on the same date already exists.
+**Tip 2:** You are allowed to add tasks with dates in the past (e.g., to retroactively log completed maintenance work). When doing so, the application will successfully add the task but will display a warning message indicating that the task is scheduled in the past.
 </box>
 
 Examples:
