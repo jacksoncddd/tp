@@ -118,19 +118,27 @@ Format: `listc`
 
 ### Locating contractors by name or service : `findc`
 
-Finds contractors whose names (n/) or service (s/) contain any of the given keywords.
+Finds contractors whose names or services contain any of the given keywords.
 
-Format: `findc n/KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
+Format: `findc n/KEYWORD [MORE_KEYWORDS]…​` or `findc s/KEYWORD [MORE_KEYWORDS]…​`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only **exact** words will be matched e.g. `Han` will not match `Hans`
-* Contractors matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+**Field constraints:**
+* Exactly one search prefix must be provided: either `n/` (search by name) or `s/` (search by service). Using both prefixes in one command is not allowed.
+* At least one keyword must be provided after the prefix.
 
-**Caution:**
-* `findc` returns the filtered list, so it will affect other commands that uses contractor index.
-* If you used `findc` as the most recent command, use `findc` contractor index instead of `listc` contractor index.
+**Search behaviour:**
+* The search is case-insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only **full words** are matched. e.g. `Han` will not match `Hans`.
+* Contractors matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+
+<box type="warning" seamless>
+
+**Caution:** `findc` filters the contractor list, so contractor indices change based on the currently displayed list. Always use the index shown in the **currently displayed list** when running commands that reference a contractor index (e.g. `addt c/INDEX`, `delc INDEX`, `editc INDEX`).
+
+For example, if `listc` shows Rachel Ng at index 5, but `findc n/Rachel` shows her at index 1, use `c/1` to refer to her after `findc`.
+
+</box>
 
 
 Examples:
