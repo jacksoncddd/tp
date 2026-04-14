@@ -21,9 +21,11 @@ EstateContacts relies on the following third-party libraries/frameworks:
 * [Jackson](https://github.com/FasterXML/jackson) for JSON serialization/deserialization.
 * [JUnit 5](https://junit.org/junit5/) for automated testing.
 
-The team also used GitHub Copilot for IDE-assisted autocomplete during development.
-Google Gemini: Used by Tan Min Zhe for the implementation and troubleshooting of the HistoryCommand,  HistoryCommandParser classes and its test cases.
-Claude: Used by Tan Yeong Teng Justin for implementation and troubleshooting of persistent storage in maintenance task and addt command.
+AI usage:
+- The team also used GitHub Copilot for IDE-assisted autocomplete during development.
+- Google Gemini: Used by Tan Min Zhe for the implementation and troubleshooting of the HistoryCommand,  HistoryCommandParser classes and its test cases.
+- Claude: Used by Tan Yeong Teng Justin for implementation and troubleshooting of persistent storage in maintenance task and addt command.
+- Codex: Used by Chia Dong (Jackson) for implementation and troubleshoot of editt, findc command and general code improvements.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
